@@ -8,7 +8,12 @@
   >
     <div :class="`${prefixCls}__entry`">
       <div :class="`${prefixCls}__header`">
-        <img :src="avatar" :class="`${prefixCls}__header-img`" />
+        <!-- modified by leencloud -->
+        <!-- <img :src="avatar" :class="`${prefixCls}__header-img`" /> -->
+        <img
+          :src="`proxy/alfresco/${avatar}&alf_ticket=${token}`"
+          :class="`${prefixCls}__header-img`"
+        />
         <p :class="`${prefixCls}__header-name`">
           {{ getRealName }}
         </p>
@@ -30,6 +35,7 @@
   import { useDesign } from '/@/hooks/web/useDesign';
   import { BasicModal, useModalInner } from '/@/components/Modal/index';
   import { BasicForm, useForm } from '/@/components/Form/index';
+  import { getToken } from '/@/utils/auth';
 
   import { useUserStore } from '/@/store/modules/user';
   import { useLockStore } from '/@/store/modules/lock';
@@ -43,8 +49,9 @@
       const { prefixCls } = useDesign('header-lock-modal');
       const userStore = useUserStore();
       const lockStore = useLockStore();
+      const token = getToken();
 
-      const getRealName = computed(() => userStore.getUserInfo?.realName);
+      const getRealName = computed(() => userStore.getUserInfo?.name);
       const [register, { closeModal }] = useModalInner();
 
       const [registerForm, { validateFields, resetFields }] = useForm({
@@ -84,6 +91,7 @@
         registerForm,
         handleLock,
         avatar,
+        token,
       };
     },
   });
