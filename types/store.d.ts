@@ -31,13 +31,30 @@ export interface ErrorLogInfo {
 }
 
 export interface UserInfo {
-  userId: string | number;
+  // modified by leencloud
+  /* userId: string | number;
   username: string;
   realName: string;
   avatar: string;
   desc?: string;
   homePath?: string;
-  roles: RoleInfo[];
+  roles: RoleInfo[]; */
+  // 是否系统管理员
+  isSysAdmin: boolean;
+  // 用户id
+  id: string | number;
+  // 用户名
+  name: string;
+  // 头像
+  avatar: string;
+  // 邮件地址
+  email?: string;
+  // cas同步用户
+  cas?: boolean;
+  // 个人首页
+  homePath?: string;
+  // 角色
+  roles?: RoleInfo[];
 }
 
 export interface BeforeMiniState {

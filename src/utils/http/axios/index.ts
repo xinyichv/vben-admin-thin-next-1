@@ -131,15 +131,19 @@ const transform: AxiosTransform = {
   /**
    * @description: 请求拦截器处理
    */
-  requestInterceptors: (config, options) => {
+  requestInterceptors: (config) => {
     // 请求之前处理config
     const token = getToken();
-    if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
+    // modified by leencloud
+    /* if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
       // jwt token
       config.headers.Authorization = options.authenticationScheme
         ? `${options.authenticationScheme} ${token}`
         : token;
-    }
+    } */
+    config.url = setObjToUrlParams(config.url as string, {
+      alf_ticket: token,
+    });
     return config;
   },
 

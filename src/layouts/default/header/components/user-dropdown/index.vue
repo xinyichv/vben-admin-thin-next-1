@@ -1,10 +1,15 @@
 <template>
   <Dropdown placement="bottomLeft" :overlayClassName="`${prefixCls}-dropdown-overlay`">
     <span :class="[prefixCls, `${prefixCls}--${theme}`]" class="flex">
-      <img :class="`${prefixCls}__header`" :src="getUserInfo.avatar" />
+      <!-- modified by leencloud -->
+      <!-- <img :class="`${prefixCls}__header`" :src="getUserInfo.avatar" /> -->
+      <img
+        :class="`${prefixCls}__header`"
+        :src="`proxy/alfresco/${getUserInfo.avatar}&alf_ticket=${token}`"
+      />
       <span :class="`${prefixCls}__info hidden md:block`">
         <span :class="`${prefixCls}__name  `" class="truncate">
-          {{ getUserInfo.realName }}
+          {{ getUserInfo.name }}
         </span>
       </span>
     </span>
@@ -51,6 +56,7 @@
   import headerImg from '/@/assets/images/header.jpg';
   import { propTypes } from '/@/utils/propTypes';
   import { openWindow } from '/@/utils';
+  import { getToken } from '/@/utils/auth';
 
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
 
@@ -73,10 +79,11 @@
       const { t } = useI18n();
       const { getShowDoc, getUseLockPage } = useHeaderSetting();
       const userStore = useUserStore();
+      const token = getToken();
 
       const getUserInfo = computed(() => {
-        const { realName = '', avatar, desc } = userStore.getUserInfo || {};
-        return { realName, avatar: avatar || headerImg, desc };
+        const { name = '', avatar, id } = userStore.getUserInfo || {};
+        return { name, avatar: avatar || headerImg, id };
       });
 
       const [register, { openModal }] = useModal();
@@ -117,6 +124,7 @@
         getShowDoc,
         register,
         getUseLockPage,
+        token,
       };
     },
   });
