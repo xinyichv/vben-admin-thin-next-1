@@ -3,11 +3,11 @@ import type { AppRouteModule } from '/@/router/types';
 import { LAYOUT } from '/@/router/constant';
 import { t } from '/@/hooks/web/useI18n';
 
-const home: AppRouteModule = {
-  path: '/home',
-  name: 'Home',
+const workbench: AppRouteModule = {
+  path: '/workbench',
+  name: 'Workbench',
   component: LAYOUT,
-  redirect: '/home/index',
+  redirect: '/workbench/index',
   meta: {
     hideChildrenInMenu: true,
     icon: 'ant-design:dashboard-filled',
@@ -17,8 +17,8 @@ const home: AppRouteModule = {
   children: [
     {
       path: 'index',
-      name: 'HomePage',
-      component: () => import('/@/views/home/index.vue'),
+      name: 'WorkbenchPage',
+      component: () => import('/@/views/workbench/index.vue'),
       meta: {
         title: t('routes.home.home'),
         icon: 'ant-design:dashboard-filled',
@@ -28,4 +28,4 @@ const home: AppRouteModule = {
   ],
 };
 
-export default home;
+export default workbench;

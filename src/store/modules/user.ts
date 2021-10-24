@@ -43,6 +43,9 @@ export const useUserStore = defineStore({
     getUserInfo(): UserInfo {
       return this.userInfo || getAuthCache<UserInfo>(USER_INFO_KEY) || {};
     },
+    getUserAvatar(): string {
+      return `proxy/alfresco/${this.userInfo?.avatar}&alf_ticket=${this.token}`;
+    },
     getToken(): string {
       return this.token || getAuthCache<string>(TOKEN_KEY);
     },
