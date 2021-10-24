@@ -12,48 +12,66 @@ export interface ListItem {
 // tab的list
 export const settingList = [
   {
-    key: '2',
-    name: '账号绑定',
-    component: 'AccountBind',
+    key: '1',
+    name: '微信',
+    component: 'Wechat',
   },
   {
-    key: '3',
-    name: '新消息通知',
+    key: '2',
+    name: '钉钉',
     component: 'MsgNotify',
   },
 ];
 
-// 基础设置 form
-export const baseSetschemas: FormSchema[] = [
+// 微信设置 form
+export const wechatSetschemas: FormSchema[] = [
   {
-    field: 'email',
-    component: 'Input',
-    label: '邮箱',
-    colProps: { span: 18 },
+    field: 'compinfo',
+    component: 'Divider',
+    label: '企业信息',
   },
   {
-    field: 'name',
+    field: 'corpid',
     component: 'Input',
-    label: '昵称',
+    label: '企业ID（corpid）',
     colProps: { span: 18 },
+    labelWidth: 200,
   },
   {
-    field: 'introduction',
-    component: 'InputTextArea',
-    label: '个人简介',
-    colProps: { span: 18 },
+    field: 'addressbook',
+    component: 'Divider',
+    label: '通讯录',
   },
   {
-    field: 'phone',
+    field: 'addressbook_corpsecret',
     component: 'Input',
-    label: '联系电话',
+    label: '应用凭证密钥（corpsecret）',
     colProps: { span: 18 },
+    labelWidth: 200,
   },
   {
-    field: 'address',
+    field: 'idoc',
+    component: 'Divider',
+    label: '文档管理',
+  },
+  {
+    field: 'idoc_agentid',
     component: 'Input',
-    label: '所在地区',
+    label: 'AgentId',
     colProps: { span: 18 },
+    labelWidth: 200,
+  },
+  {
+    field: 'idoc_corpsecret',
+    component: 'Input',
+    label: '应用凭证密钥（corpsecret）',
+    colProps: { span: 18 },
+    labelWidth: 200,
+  },
+  {
+    field: 'mhomepage',
+    component: 'Divider',
+    label: '移动端首页',
   },
 ];
 

@@ -19,7 +19,7 @@
   import { ScrollContainer } from '/@/components/Container/index';
   import { settingList } from './data';
 
-  import AccountBind from './components/AccountBind.vue';
+  import Wechat from './components/Wechat.vue';
   import MsgNotify from './components//MsgNotify.vue';
 
   export default defineComponent({
@@ -27,7 +27,7 @@
       ScrollContainer,
       Tabs,
       TabPane: Tabs.TabPane,
-      AccountBind,
+      Wechat,
       MsgNotify,
     },
     setup() {
