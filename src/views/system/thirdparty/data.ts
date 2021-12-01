@@ -73,6 +73,14 @@ export const wechatSetschemas: FormSchema[] = [
     component: 'Divider',
     label: '移动端首页',
   },
+  {
+    field: 'mhomepage_home',
+    component: 'Input',
+    label: '首页地址',
+    colProps: { span: 18 },
+    labelWidth: 200,
+    componentProps: { disabled: true },
+  },
 ];
 
 // 安全设置 list
