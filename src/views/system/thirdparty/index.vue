@@ -20,7 +20,7 @@
   import { settingList } from './data';
 
   import Wechat from './components/Wechat.vue';
-  import MsgNotify from './components//MsgNotify.vue';
+  import Dingding from './components/Dingding.vue';
 
   export default defineComponent({
     components: {
@@ -28,7 +28,7 @@
       Tabs,
       TabPane: Tabs.TabPane,
       Wechat,
-      MsgNotify,
+      Dingding,
     },
     setup() {
       return {

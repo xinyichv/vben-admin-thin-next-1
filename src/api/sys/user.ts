@@ -21,7 +21,6 @@ export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') 
     },
     {
       errorMessageMode: mode,
-      isTransformResponse: false, // add by leencloud
     },
   );
 }

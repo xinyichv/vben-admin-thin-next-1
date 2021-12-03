@@ -1,5 +1,5 @@
 <template>
-  <CollapseContainer :title="t('system.wechat')" :canExpan="false">
+  <CollapseContainer :title="t('system.dingding')" :canExpan="false">
     <a-row :gutter="24">
       <a-col :span="24">
         <BasicForm @register="register" />
@@ -18,7 +18,7 @@
   import { useMessage } from '/@/hooks/web/useMessage';
 
   import { getSysSetting, setSysSetting } from '/@/api/system/thirdparty';
-  import { wechatSetschemas } from '../data';
+  import { dingdingSetschemas } from '../data';
 
   export default defineComponent({
     components: {
@@ -34,14 +34,14 @@
 
       const [register, { setFieldsValue, getFieldsValue }] = useForm({
         labelWidth: 120,
-        schemas: wechatSetschemas,
+        schemas: dingdingSetschemas,
         showActionButtonGroup: false,
       });
 
       onMounted(async () => {
         let params = {};
-        for (let i in wechatSetschemas) {
-          let itemObj = wechatSetschemas[i];
+        for (let i in dingdingSetschemas) {
+          let itemObj = dingdingSetschemas[i];
           if (itemObj.itemProps && itemObj.itemProps.name) {
             params[itemObj.itemProps.name as string] = '';
           }

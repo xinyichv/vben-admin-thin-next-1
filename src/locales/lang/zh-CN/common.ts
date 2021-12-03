@@ -8,6 +8,8 @@ export default {
   resetText: '重置',
   searchText: '搜索',
   queryText: '查询',
+  save: '保存',
+  saveSuccess: '保存成功',
 
   inputText: '请输入',
   chooseText: '请选择',
