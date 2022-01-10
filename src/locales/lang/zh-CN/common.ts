@@ -1,10 +1,12 @@
 export default {
+  action: '操作',
   okText: '确认',
   closeText: '关闭',
   cancelText: '取消',
   loadingText: '加载中...',
   saveText: '保存',
   delText: '删除',
+  delConfirm: '是否确认删除',
   resetText: '重置',
   searchText: '搜索',
   queryText: '查询',
@@ -19,4 +21,9 @@ export default {
 
   light: '亮色主题',
   dark: '黑暗主题',
+
+  creator: '创建者',
+  created: '创建时间',
+  modifier: '修改者',
+  modified: '修改时间',
 };

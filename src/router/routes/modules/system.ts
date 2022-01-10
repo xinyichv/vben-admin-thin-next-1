@@ -11,7 +11,7 @@ const system: AppRouteModule = {
   meta: {
     orderNo: 90,
     icon: 'ant-design:setting-filled',
-    title: t('routes.system.system'),
+    title: t('routes.system'),
   },
   children: [
     {
@@ -19,7 +19,15 @@ const system: AppRouteModule = {
       name: 'Setting',
       component: () => import('/@/views/system/setting/index.vue'),
       meta: {
-        title: t('routes.system.setting'),
+        title: t('routes.setting'),
+      },
+    },
+    {
+      path: 'site',
+      name: 'Site',
+      component: () => import('/@/views/system/site/index.vue'),
+      meta: {
+        title: t('routes.site'),
       },
     },
     {
@@ -27,7 +35,7 @@ const system: AppRouteModule = {
       name: 'ThirdParty',
       component: () => import('/@/views/system/thirdparty/index.vue'),
       meta: {
-        title: t('routes.system.thirdparty.thirdparty'),
+        title: t('routes.thirdparty.thirdparty'),
       },
     },
   ],
