@@ -19,4 +19,5 @@ export default {
   subType3: '项目文档',
   downloadLimit: '下载限制',
   downloadLimitHelp: '开启后，除管理员和文件上传人外，其他人如需下载文件，需要申请',
+  delFail: '以下站点删除失败，请刷新页面后重试：',
 };

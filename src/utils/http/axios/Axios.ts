@@ -8,6 +8,8 @@ import { isFunction } from '/@/utils/is';
 import { cloneDeep } from 'lodash-es';
 import { ContentTypeEnum } from '/@/enums/httpEnum';
 import { RequestEnum } from '/@/enums/httpEnum';
+import { useI18n } from '/@/hooks/web/useI18n';
+import { useMessage } from '/@/hooks/web/useMessage';
 
 export * from './axiosTransform';
 
@@ -207,6 +209,9 @@ export class VAxios {
 
     conf = this.supportFormData(conf);
 
+    const { t } = useI18n();
+    const { createMessage } = useMessage();
+
     return new Promise((resolve, reject) => {
       this.axiosInstance
         .request<any, AxiosResponse<Result>>(conf)
@@ -230,7 +235,12 @@ export class VAxios {
             return;
           }
           if (axios.isAxiosError(e)) {
-            // rewrite error message from axios in here
+            if (e.response) {
+              createMessage.error(t(e.response.data.message) || t('common.actionFail'));
+            } else {
+              createMessage.error(e.message);
+            }
+            return;
           }
           reject(e);
         });

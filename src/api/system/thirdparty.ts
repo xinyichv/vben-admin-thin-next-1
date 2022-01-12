@@ -13,7 +13,7 @@ export function getSysSetting(params: any) {
   });
 }
 
-export function setSysSetting(params: any) {
+export function saveSysSetting(params: any) {
   return defHttp.post<any>({
     url: Api.BASE_CONFIG,
     params,

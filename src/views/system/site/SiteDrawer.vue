@@ -17,6 +17,8 @@
   import { useI18n } from '/@/hooks/web/useI18n';
   import { formSchema } from './data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
+  import { useMessage } from '/@/hooks/web/useMessage';
+  import { saveSite } from '/@/api/system/site';
 
   export default defineComponent({
     name: 'SiteDrawer',
@@ -24,21 +26,26 @@
     emits: ['success', 'register'],
     setup(_, { emit }) {
       const { t } = useI18n();
+      const { createMessage } = useMessage();
       const isUpdate = ref(true);
+      let key = '';
 
       const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
         labelWidth: 90,
         schemas: formSchema,
         showActionButtonGroup: false,
+        autoFocusFirstItem: true,
       });
 
       const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
+        key = '';
         resetFields();
         setDrawerProps({ confirmLoading: false });
 
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
+          key = data.record.key;
           setFieldsValue({
             ...data.record,
           });
@@ -49,12 +56,22 @@
 
       async function handleSubmit() {
         try {
-          const values = await validate();
+          let values = await validate();
+          values.key = key;
+
           setDrawerProps({ confirmLoading: true });
-          // TODO custom api
-          console.log(values);
-          closeDrawer();
-          emit('success');
+          const data = await saveSite(values);
+          if (data && data.result == 'success') {
+            if (unref(isUpdate)) {
+              createMessage.success(t('common.saveSuccess'));
+            } else {
+              createMessage.success(t('common.saveSuccessWait'));
+            }
+            closeDrawer();
+            emit('success');
+          } else {
+            createMessage.error(data.msg || t('common.actionFail'));
+          }
         } finally {
           setDrawerProps({ confirmLoading: false });
         }

@@ -13,7 +13,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: t('site.enname'),
-    dataIndex: 'idoc_enname',
+    dataIndex: 'idoc_english',
     width: 80,
     sorter: true,
   },
@@ -28,6 +28,9 @@ export const columns: BasicColumn[] = [
     dataIndex: 'idoc_type',
     width: 60,
     sorter: true,
+    format: (val) => {
+      return t('site.siteType' + val);
+    },
   },
   {
     title: t('common.creator'),
@@ -71,15 +74,15 @@ export const formSchema: FormSchema[] = [
     label: t('site.name'),
     required: true,
     colProps: {
-      span: 12,
+      span: 24,
     },
   },
   {
-    field: 'idoc_enname',
+    field: 'idoc_english',
     component: 'Input',
     label: t('site.enname'),
     colProps: {
-      span: 12,
+      span: 24,
     },
   },
   {
@@ -89,7 +92,7 @@ export const formSchema: FormSchema[] = [
     helpMessage: t('site.urlHelp'),
     required: true,
     colProps: {
-      span: 12,
+      span: 24,
     },
   },
   {
@@ -98,7 +101,7 @@ export const formSchema: FormSchema[] = [
     label: t('site.siteType'),
     required: true,
     colProps: {
-      span: 12,
+      span: 24,
     },
     componentProps: {
       options: [
@@ -134,7 +137,7 @@ export const formSchema: FormSchema[] = [
     required: true,
     helpMessage: t('site.subTypeHelp'),
     colProps: {
-      span: 12,
+      span: 24,
     },
     componentProps: {
       options: [
@@ -155,7 +158,7 @@ export const formSchema: FormSchema[] = [
         },
       ],
     },
-    show: ({ values }) => {
+    ifShow: ({ values }) => {
       return values.idoc_type == '1';
     },
   },
@@ -165,9 +168,9 @@ export const formSchema: FormSchema[] = [
     label: t('site.downloadLimit'),
     helpMessage: t('site.downloadLimitHelp'),
     colProps: {
-      span: 12,
+      span: 24,
     },
-    show: ({ values }) => {
+    ifShow: ({ values }) => {
       return values.idoc_type == '1';
     },
   },

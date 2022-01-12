@@ -17,7 +17,7 @@
 
   import { useMessage } from '/@/hooks/web/useMessage';
 
-  import { getSysSetting, setSysSetting } from '/@/api/system/thirdparty';
+  import { getSysSetting, saveSysSetting } from '/@/api/system/thirdparty';
   import { dingdingSetschemas } from '../data';
 
   export default defineComponent({
@@ -56,7 +56,7 @@
         for (var i in formJson) {
           formData.append(i, formJson[i]);
         }
-        const data = await setSysSetting(formData);
+        const data = await saveSysSetting(formData);
         if (data && data.result == 'success') {
           createMessage.success(t('common.saveSuccess'));
         }

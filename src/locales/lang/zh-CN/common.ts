@@ -11,7 +11,10 @@ export default {
   searchText: '搜索',
   queryText: '查询',
   save: '保存',
-  saveSuccess: '保存成功',
+  saveSuccess: '保存成功！',
+  saveSuccessWait: '保存成功！请稍后手动刷新页面。',
+  actionFail: '操作失败，请重试或联络系统管理员！',
+  delSuccess: '删除成功!',
 
   inputText: '请输入',
   chooseText: '请选择',
