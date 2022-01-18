@@ -7,16 +7,20 @@
     </div>
     <div class="flex flex-1 justify-end md:mt-0 mt-4">
       <div class="flex flex-col justify-center text-right">
-        <span class="text-secondary"> 待办 </span>
-        <span class="text-2xl">2/10</span>
+        <router-link to="/mytask/todo">
+          <span class="text-secondary"> 待办 </span>
+        </router-link>
+        <router-link to="/mytask/todo">
+          <span class="text-2xl">2</span>
+        </router-link>
       </div>
 
       <div class="flex flex-col justify-center text-right md:mx-16 mx-12">
-        <span class="text-secondary"> 项目 </span>
+        <span class="text-secondary"> 本月更新 </span>
         <span class="text-2xl">8</span>
       </div>
       <div class="flex flex-col justify-center text-right md:mr-10 mr-4">
-        <span class="text-secondary"> 团队 </span>
+        <span class="text-secondary"> 本月新增 </span>
         <span class="text-2xl">300</span>
       </div>
     </div>
