@@ -8,12 +8,14 @@
         <TableAction
           :actions="[
             {
-              icon: 'clarity:note-edit-line',
+              icon: 'ant-design:edit-outlined',
+              tooltip: t('common.edit'),
               onClick: handleEdit.bind(null, record),
             },
             {
               icon: 'ant-design:delete-outlined',
               color: 'error',
+              tooltip: t('common.delete'),
               popConfirm: {
                 title: t('common.delConfirm'),
                 confirm: handleDelete.bind(null, record),
@@ -29,14 +31,14 @@
 <script lang="ts">
   import { defineComponent } from 'vue';
 
+  import { useLoading } from '/@/components/Loading';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getSiteByPage } from '/@/api/system/site';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
 
   import { useDrawer } from '/@/components/Drawer';
   import SiteDrawer from './SiteDrawer.vue';
-  import { deleteSite } from '/@/api/system/site';
+  import { getSiteByPage, deleteSite } from '/@/api/system/site';
   import { BasicDelParams } from '/@/api/model/baseModel';
 
   import { columns, searchFormSchema } from './data';
@@ -48,6 +50,9 @@
       const { t } = useI18n();
       const { createMessage } = useMessage();
       const [registerDrawer, { openDrawer }] = useDrawer();
+      const [openFullLoading, closeFullLoading] = useLoading({
+        tip: t('common.actioningText'),
+      });
       const [registerTable, { reload }] = useTable({
         title: t('site.siteList'),
         titleHelpMessage: t('site.siteListHelp'),
@@ -67,7 +72,6 @@
           title: t('common.action'),
           dataIndex: 'action',
           slots: { customRender: 'action' },
-          fixed: undefined,
         },
       });
 
@@ -93,6 +97,7 @@
         const params: BasicDelParams = {
           keys: keys,
         };
+        openFullLoading();
         const data = await deleteSite(params);
         if (data && data.fail == 0) {
           createMessage.success(t('common.delSuccess'));
@@ -106,6 +111,7 @@
           }
           createMessage.error(t('site.delFail') + '<br>' + errMsg.join('<br>'));
         }
+        closeFullLoading();
         reload();
       }
 

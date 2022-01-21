@@ -1,3 +1,7 @@
+export interface BasicResult {
+  key: string;
+}
+
 export interface BasicPageParams {
   page: number;
   pageSize: number;
@@ -17,12 +21,29 @@ export interface BasicBatchResult<T> {
 export interface BasicFetchResult<T> {
   items: T[];
   total: number;
+  destination?: string;
 }
 
 export interface BasicResResult {
-  result: string;
-  data?: any;
-  msg?: string;
+  data: any;
+}
+
+export interface GetKeyParams {
+  path: string;
 }
 
 export type tableModel = BasicFetchResult<any>;
+
+export interface SaveNodeParams {
+  key?: string;
+  destination?: string;
+  cm_name?: string;
+  type?: string;
+  cm_content?: string;
+  properties?: any;
+}
+
+export interface DownloadParams {
+  key: string;
+  name: string;
+}

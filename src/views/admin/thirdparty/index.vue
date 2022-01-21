@@ -23,6 +23,7 @@
   import Dingding from './components/Dingding.vue';
 
   export default defineComponent({
+    name: 'ThirdParty',
     components: {
       ScrollContainer,
       Tabs,

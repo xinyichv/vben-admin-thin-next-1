@@ -4,20 +4,20 @@ import { LAYOUT } from '/@/router/constant';
 import { t } from '/@/hooks/web/useI18n';
 
 const system: AppRouteModule = {
-  path: '/system',
-  name: 'System',
+  path: '/admin',
+  name: 'Admin',
   component: LAYOUT,
-  redirect: '/system/setting',
+  redirect: '/admin/syssetting',
   meta: {
     orderNo: 90,
     icon: 'ant-design:setting-filled',
-    title: t('routes.system'),
+    title: t('routes.systemManage'),
   },
   children: [
     {
-      path: 'setting',
-      name: 'Setting',
-      component: () => import('/@/views/system/setting/index.vue'),
+      path: 'syssetting',
+      name: 'SysSetting',
+      component: () => import('/@/views/admin/syssetting/index.vue'),
       meta: {
         title: t('routes.setting'),
       },
@@ -25,15 +25,23 @@ const system: AppRouteModule = {
     {
       path: 'site',
       name: 'Site',
-      component: () => import('/@/views/system/site/index.vue'),
+      component: () => import('/@/views/admin/site/index.vue'),
       meta: {
         title: t('routes.site'),
       },
     },
     {
+      path: 'datamodel',
+      name: 'DataModel',
+      component: () => import('/@/views/admin/datamodel/index.vue'),
+      meta: {
+        title: t('routes.model'),
+      },
+    },
+    {
       path: 'thirdparty',
       name: 'ThirdParty',
-      component: () => import('/@/views/system/thirdparty/index.vue'),
+      component: () => import('/@/views/admin/thirdparty/index.vue'),
       meta: {
         title: t('routes.thirdparty.thirdparty'),
       },

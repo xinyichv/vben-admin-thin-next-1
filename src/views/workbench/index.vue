@@ -9,9 +9,7 @@
       <div class="lg:w-3/10 w-full enter-y">
         <QuickNav :loading="loading" class="enter-y" />
 
-        <Card class="!my-4 enter-y" :loading="loading">
-          <img class="xl:h-50 h-30 mx-auto" src="../../../assets/svg/illustration.svg" />
-        </Card>
+        <Card class="!my-4 enter-y" :loading="loading" />
 
         <SaleRadar :loading="loading" class="enter-y" />
       </div>

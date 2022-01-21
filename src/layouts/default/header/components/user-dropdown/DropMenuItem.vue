@@ -18,13 +18,13 @@
     name: 'DropdownMenuItem',
     components: { MenuItem: Menu.Item, Icon },
     props: {
-      key: propTypes.string,
+      ikey: propTypes.string,
       text: propTypes.string,
       icon: propTypes.string,
     },
     setup(props) {
       const instance = getCurrentInstance();
-      const itemKey = computed(() => props.key || instance?.vnode?.props?.key);
+      const itemKey = computed(() => props.ikey || instance?.vnode?.props?.ikey);
       return { itemKey };
     },
   });

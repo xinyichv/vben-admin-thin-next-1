@@ -26,6 +26,9 @@ export default {
     missingSiteName: '站点名称不可为空!',
     missingSiteType: '站点类型不可为空!',
     notexistSite: '站点不存在，请重试！',
+    argsErr: '参数错误！',
+    nodenotexist: '操作的目标节点不存在！',
+    nodeexisted: '文件/文件夹已存在！',
   },
   app: { logoutTip: '温馨提醒', logoutMessage: '是否确认退出系统?', menuLoading: '菜单加载中...' },
   errorLog: {

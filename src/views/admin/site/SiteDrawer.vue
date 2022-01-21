@@ -4,7 +4,7 @@
     @register="registerDrawer"
     showFooter
     :title="getTitle"
-    width="800px"
+    width="600px"
     :maskClosable="false"
     @ok="handleSubmit"
   >
@@ -15,9 +15,9 @@
   import { defineComponent, ref, computed, unref } from 'vue';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { useI18n } from '/@/hooks/web/useI18n';
+  import { useMessage } from '/@/hooks/web/useMessage';
   import { formSchema } from './data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { useMessage } from '/@/hooks/web/useMessage';
   import { saveSite } from '/@/api/system/site';
 
   export default defineComponent({
@@ -60,18 +60,14 @@
           values.key = key;
 
           setDrawerProps({ confirmLoading: true });
-          const data = await saveSite(values);
-          if (data && data.result == 'success') {
-            if (unref(isUpdate)) {
-              createMessage.success(t('common.saveSuccess'));
-            } else {
-              createMessage.success(t('common.saveSuccessWait'));
-            }
-            closeDrawer();
-            emit('success');
+          await saveSite(values);
+          if (unref(isUpdate)) {
+            createMessage.success(t('common.saveSuccess'));
           } else {
-            createMessage.error(data.msg || t('common.actionFail'));
+            createMessage.success(t('common.saveSuccessWait'));
           }
+          closeDrawer();
+          emit('success');
         } finally {
           setDrawerProps({ confirmLoading: false });
         }

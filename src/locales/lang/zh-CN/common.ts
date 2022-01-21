@@ -1,5 +1,6 @@
 export default {
   action: '操作',
+  actioningText: '操作中...',
   okText: '确认',
   closeText: '关闭',
   cancelText: '取消',
@@ -29,4 +30,13 @@ export default {
   created: '创建时间',
   modifier: '修改者',
   modified: '修改时间',
+
+  name: '名称',
+  active: '激活',
+
+  edit: '编辑',
+  delete: '删除',
+  rename: '重命名',
+  download: '下载',
+  create: '创建',
 };

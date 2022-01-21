@@ -1,5 +1,5 @@
 export default {
-  create: '新增站点',
+  create: '创建站点',
   edit: '编辑站点',
   siteList: '站点列表',
   siteListHelp: '站点管理',
