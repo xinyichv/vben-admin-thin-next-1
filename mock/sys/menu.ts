@@ -234,10 +234,320 @@ const linkRoute = {
     },
   ],
 };
+// idoc所有路由
+const workbenchRoute = {
+  path: '/workbench',
+  name: 'Workbench',
+  component: 'LAYOUT',
+  redirect: '/workbench/index',
+  meta: {
+    hideChildrenInMenu: true,
+    icon: 'ant-design:dashboard-filled',
+    title: 'routes.home.home',
+    orderNo: 100,
+  },
+  children: [
+    {
+      path: 'index',
+      name: 'WorkbenchPage',
+      component: '/workbench/index.vue',
+      meta: {
+        title: 'routes.home.home',
+        icon: 'ant-design:dashboard-filled',
+        hideMenu: true,
+      },
+    },
+  ],
+};
+const isodocRoute = {
+  path: '/isodoc',
+  name: 'ISODoc',
+  component: 'LAYOUT',
+  redirect: '/isodoc/index',
+  meta: {
+    hideChildrenInMenu: true,
+    icon: 'grommet-icons:send',
+    title: 'routes.isodoc.document',
+    orderNo: 200,
+  },
+  children: [
+    {
+      path: 'index',
+      name: 'ISODocPage',
+      component: '/isodoc/document/index.vue',
+      meta: {
+        title: 'routes.isodoc.document',
+        icon: 'grommet-icons:send',
+        hideMenu: true,
+      },
+    },
+  ],
+};
+const sitesRoute = {
+  path: '/sites',
+  name: 'Sites',
+  component: 'LAYOUT',
+  redirect: '/sites/list',
+  meta: {
+    hideChildrenInMenu: true,
+    icon: 'mdi:sitemap',
+    title: 'site.siteList',
+    orderNo: 300,
+  },
+  children: [
+    {
+      path: 'list',
+      name: 'SitesPage',
+      component: '/site/list/index.vue',
+      meta: {
+        title: 'site.siteList',
+        icon: 'mdi:sitemap',
+        hideMenu: true,
+      },
+    },
+  ],
+};
+const mytaskRoute = {
+  path: '/mytask',
+  name: 'Mytask',
+  component: 'LAYOUT',
+  redirect: '/mytask/todo',
+  meta: {
+    icon: 'mdi:alpha-p-circle',
+    title: 'routes.mytask.task',
+    orderNo: 400,
+  },
+  children: [
+    {
+      path: 'todo',
+      name: 'TodoPage',
+      component: '/mytask/todo/index.vue',
+      meta: {
+        title: 'routes.mytask.task',
+        // icon: 'mdi:alpha-p-circle',
+      },
+    },
+    {
+      path: 'apply',
+      name: 'ApplyPage',
+      component: '/mytask/apply/index.vue',
+      meta: {
+        title: 'routes.mytask.apply',
+        // icon: 'mdi:application-export',
+      },
+    },
+  ],
+};
+const personalRoute = {
+  path: '/personal',
+  name: 'Personal',
+  component: 'LAYOUT',
+  redirect: '/personal/settings',
+  meta: {
+    icon: 'ic:baseline-person',
+    title: 'routes.personal.settings',
+    orderNo: 400,
+  },
+  children: [
+    {
+      path: 'settings',
+      name: 'SettingsPage',
+      component: '/personal/settings/index.vue',
+      meta: {
+        title: 'routes.personal.settings',
+      },
+    },
+    {
+      path: 'favorite',
+      name: 'FavoritePage',
+      component: '/personal/favorite/index.vue',
+      meta: {
+        title: 'routes.personal.favorite',
+      },
+    },
+    {
+      path: 'share',
+      name: 'SharePage',
+      component: '/personal/share/index.vue',
+      meta: {
+        title: 'routes.personal.share',
+      },
+    },
+    {
+      path: 'trash',
+      name: 'TrashPage',
+      component: '/personal/trash/index.vue',
+      meta: {
+        title: 'routes.personal.trash',
+      },
+    },
+  ],
+};
+const systemRoute = {
+  path: '/system',
+  name: 'System',
+  component: 'LAYOUT',
+  redirect: '/system/setting',
+  meta: {
+    orderNo: 800,
+    icon: 'ant-design:setting-filled',
+    title: 'routes.system.system',
+  },
+  children: [
+    {
+      path: 'setting',
+      name: 'Setting',
+      component: '/system/setting/index.vue',
+      meta: {
+        title: 'routes.system.setting',
+      },
+    },
+    {
+      path: 'account',
+      name: 'Account',
+      component: '/system/account/index.vue',
+      meta: {
+        title: 'routes.system.account',
+      },
+    },
+    {
+      path: 'organize',
+      name: 'Organize',
+      component: '/system/organize/index.vue',
+      meta: {
+        title: 'routes.system.organize',
+      },
+    },
+    {
+      path: 'site',
+      name: 'Site',
+      component: '/system/site/index.vue',
+      meta: {
+        title: 'routes.system.site',
+      },
+    },
+    {
+      path: 'template',
+      name: 'Template',
+      redirect: '/system/template/file',
+      meta: {
+        title: 'routes.system.template.template',
+      },
+      children: [
+        {
+          path: 'file',
+          name: 'File',
+          component: '/system/template/file/index.vue',
+          meta: {
+            title: 'routes.system.template.file',
+          },
+        },
+        {
+          path: 'folder',
+          name: 'Folder',
+          component: '/system/template/folder/index.vue',
+          meta: {
+            title: 'routes.system.template.folder',
+          },
+        },
+      ],
+    },
+    {
+      path: 'datadic',
+      name: 'Datadic',
+      component: '/system/datadic/index.vue',
+      meta: {
+        title: 'routes.system.datadic',
+      },
+    },
+    {
+      path: 'navigate',
+      name: 'Navigate',
+      component: '/system/navigate/index.vue',
+      meta: {
+        title: 'routes.system.navigate',
+      },
+    },
+    {
+      path: 'category',
+      name: 'Category',
+      component: '/system/category/index.vue',
+      meta: {
+        title: 'routes.system.category',
+      },
+    },
+    {
+      path: 'tag',
+      name: 'Tag',
+      component: '/system/tag/index.vue',
+      meta: {
+        title: 'routes.system.tag',
+      },
+    },
+    {
+      path: 'folderrule',
+      name: 'Folderrule',
+      component: '/system/folderrule/index.vue',
+      meta: {
+        title: 'routes.system.folderrule',
+      },
+    },
+    {
+      path: 'dataModel',
+      name: 'DataModel',
+      component: '/system/dataModel/index.vue',
+      meta: {
+        title: 'routes.system.dataModel',
+      },
+    },
+    {
+      path: 'workflow',
+      name: 'Workflow',
+      component: '/system/workflow/index.vue',
+      meta: {
+        title: 'routes.system.workflow',
+      },
+    },
+    {
+      path: 'thirdparty',
+      name: 'ThirdParty',
+      component: '/system/thirdparty/index.vue',
+      meta: {
+        title: 'routes.thirdparty.thirdparty',
+      },
+    },
+    {
+      path: 'log',
+      name: 'Log',
+      redirect: '/system/log/system',
+      meta: {
+        title: 'routes.system.log.system',
+      },
+      children: [
+        {
+          path: 'login',
+          name: 'Login',
+          component: '/system/log/login/index.vue',
+          meta: {
+            title: 'routes.system.log.login',
+          },
+        },
+        {
+          path: 'operation',
+          name: 'Operation',
+          component: '/system/log/operation/index.vue',
+          meta: {
+            title: 'routes.system.log.operation',
+          },
+        },
+      ],
+    },
+  ],
+};
 
 export default [
   {
-    url: '/basic-api/getMenuList',
+    url: '/proxy/alfresco/getMenuList',
     timeout: 1000,
     method: 'get',
     response: (request: requestParams) => {
@@ -251,6 +561,7 @@ export default [
       }
       const id = checkUser.userId;
       let menu: Object[];
+      // 模拟后台数据，根据不同用户返回不同的菜单
       switch (id) {
         case '1':
           dashboardRoute.redirect = dashboardRoute.path + '/' + dashboardRoute.children[0].path;
@@ -260,10 +571,12 @@ export default [
           dashboardRoute.redirect = dashboardRoute.path + '/' + dashboardRoute.children[1].path;
           menu = [dashboardRoute, authRoute, levelRoute, linkRoute];
           break;
+        case '3':
+          menu = [workbenchRoute, isodocRoute, sitesRoute, mytaskRoute, personalRoute, systemRoute];
+          break;
         default:
           menu = [];
       }
-
       return resultSuccess(menu);
     },
   },

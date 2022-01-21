@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper :title="t(currentRoute.meta.title)">
+  <PageWrapper title="我的分享">
     <template #headerContent>
       <div class="flex justify-between items-center">
         <span class="flex-1">开发中。</span>
@@ -10,11 +10,6 @@
 <script lang="ts" setup>
   import { PageWrapper } from '/@/components/Page';
   import { DescItem } from '/@/components/Description/index';
-  import { useRouter } from 'vue-router';
-  import { useI18n } from '/@/hooks/web/useI18n';
-
-  const { t } = useI18n();
-  const { currentRoute } = useRouter();
 
   const { pkg } = __APP_INFO__;
 

@@ -12,7 +12,7 @@ const workbench: AppRouteModule = {
     hideChildrenInMenu: true,
     icon: 'ant-design:dashboard-filled',
     title: t('routes.home.home'),
-    orderNo: 10,
+    orderNo: 100,
   },
   children: [
     {

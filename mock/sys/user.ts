@@ -35,6 +35,22 @@ export function createFakeUserList() {
         },
       ],
     },
+    {
+      userId: '3',
+      username: 'admin',
+      realName: 'Admin',
+      avatar: 'https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640',
+      desc: 'manager',
+      password: 'leencloud',
+      token: 'fakeToken3',
+      homePath: '/dashboard/analysis',
+      roles: [
+        {
+          roleName: 'Super Admin',
+          value: 'super',
+        },
+      ],
+    },
   ];
 }
 
@@ -46,10 +62,11 @@ const fakeCodeList: any = {
 export default [
   // mock user login
   {
-    url: '/basic-api/login',
+    url: '/proxy/alfresco/api/login',
     timeout: 200,
     method: 'post',
     response: ({ body }) => {
+      console.log('调用了登录接口');
       const { username, password } = body;
       const checkUser = createFakeUserList().find(
         (item) => item.username === username && password === item.password,
@@ -58,14 +75,39 @@ export default [
         return resultError('Incorrect account or password！');
       }
       const { userId, username: _username, token, realName, desc, roles } = checkUser;
-      return resultSuccess({
-        roles,
-        userId,
-        username: _username,
-        token,
-        realName,
-        desc,
-      });
+      return {
+        data: {
+          roles,
+          userId,
+          username: _username,
+          token,
+          realName,
+          desc,
+          ticket: token,
+        },
+      };
+    },
+  },
+  {
+    url: '/proxy/alfresco/idoc/common/user/profile',
+    method: 'get',
+    response: (request: requestParams) => {
+      const token = getRequestToken(request);
+      if (!token) return resultError('Invalid token');
+      const checkUser = createFakeUserList().find((item) => item.token === token);
+      if (!checkUser) {
+        return resultError('The corresponding user information was not obtained!');
+      }
+      return {
+        cas: 'false',
+        name: '管理员',
+        id: 'admin',
+        avatar:
+          'api/node/workspace/SpacesStore/cca6d5f7-4c12-402c-97ef-483f0ee4cdeb/content/thumbnails/avatar?c=force',
+        isSysAdmin: true,
+        email: 'admin@alfresco.com',
+      };
+      // return resultSuccess(checkUser);
     },
   },
   {
@@ -82,7 +124,7 @@ export default [
     },
   },
   {
-    url: '/basic-api/getPermCode',
+    url: '/proxy/alfresco/getPermCode',
     timeout: 200,
     method: 'get',
     response: (request: requestParams) => {

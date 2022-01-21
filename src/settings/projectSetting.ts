@@ -23,8 +23,9 @@ const setting: ProjectConfig = {
   // `Settings` button position
   settingButtonPosition: SettingButtonPositionEnum.AUTO,
 
-  // Permission mode
-  permissionMode: PermissionModeEnum.ROUTE_MAPPING,
+  // Permission mode (后台动态获取权限)
+  // permissionMode: PermissionModeEnum.ROUTE_MAPPING,
+  permissionMode: PermissionModeEnum.BACK,
 
   // Permission-related cache is stored in sessionStorage or localStorage
   permissionCacheType: CacheTypeEnum.SESSION,

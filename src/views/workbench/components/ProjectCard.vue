@@ -20,16 +20,25 @@
   </Card>
 </template>
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent, onMounted, ref } from 'vue';
   import { Card } from 'ant-design-vue';
   import { Icon } from '/@/components/Icon';
-  import { groupItems } from './data';
+  // import { groupItems } from './data';
   import { useI18n } from '/@/hooks/web/useI18n';
+  import { getVisitedSites } from '/@/api/workbench/workbench';
+  import { GroupItem } from '/@/api/workbench/model/visitedSites';
 
   export default defineComponent({
     components: { Card, CardGrid: Card.Grid, Icon },
     setup() {
       const { t } = useI18n();
+      let groupItems = ref<GroupItem[]>([]);
+
+      onMounted(async () => {
+        // 实现站点
+        groupItems.value = await getVisitedSites();
+      });
+
       return { t, items: groupItems };
     },
   });
