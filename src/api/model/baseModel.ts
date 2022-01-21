@@ -47,3 +47,8 @@ export interface DownloadParams {
   key: string;
   name: string;
 }
+
+export interface UploadResult {
+  key: string;
+  fileName: string;
+}

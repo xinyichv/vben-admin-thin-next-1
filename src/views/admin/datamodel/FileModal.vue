@@ -35,7 +35,7 @@
   export default defineComponent({
     name: 'FileModal',
     components: { BasicModal, BasicForm },
-    emits: ['success'],
+    emits: ['success', 'register'],
     setup(_, { emit }) {
       const { createMessage } = useMessage();
       const destination = ref('');

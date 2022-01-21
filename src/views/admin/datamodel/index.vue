@@ -1,8 +1,14 @@
 <template>
   <div class="h-full flex p-4">
     <div class="flex flex-col pr-4 w-1/4 h-full">
-      <BasicTable @register="registerTable">
+      <BasicTable @register="registerTable" @fetch-success="onFetchSuccess">
         <template #toolbar>
+          <BasicUploadS
+            :accept="['xml']"
+            :api="upload"
+            :uploadParams="uploadParams"
+            @uploaddone="handleSuccess"
+          />
           <a-button type="primary" @click="handleCreate"> {{ t('common.create') }} </a-button>
         </template>
         <template #action="{ record }">
@@ -36,7 +42,7 @@
     <div ref="editorEl" class="flex-1 flex flex-col w-3/4 h-full vben-page-wrapper-content-bg">
       <div class="h-10 vben-collapse-container__header px-2 py-6">
         <div v-if="selected" class="vben-collapse-container__action">
-          {{ t('common.active') }}
+          {{ t('common.active') }}：
           <a-switch v-model:checked="active" @change="handleActive" />
           <button
             class="ant-btn ant-btn-primary ml-4"
@@ -57,7 +63,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, reactive, toRefs, ref } from 'vue';
+  import { defineComponent, reactive, toRefs, ref, computed } from 'vue';
   import { Switch } from 'ant-design-vue';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { useI18n } from '/@/hooks/web/useI18n';
@@ -67,20 +73,35 @@
   import { PageWrapper } from '/@/components/Page';
   import { useLoading } from '/@/components/Loading';
   import { useModal } from '/@/components/Modal';
+  import { BasicUploadS } from '/@/components/UploadS';
   import FileModal from './FileModal.vue';
 
   import { columns } from './data';
   import { GetModelContentResult } from '/@/api/system/model/modelModel';
   import { getModelList, getModelContent } from '/@/api/system/model';
-  import { saveNode, download, deleteNode } from '/@/api/common';
+  import { saveNode, download, deleteNode, upload } from '/@/api/common';
 
   export default defineComponent({
     name: 'DataModel',
-    components: { BasicTable, TableAction, CodeEditor, PageWrapper, FileModal, ASwitch: Switch },
+    components: {
+      BasicTable,
+      TableAction,
+      CodeEditor,
+      PageWrapper,
+      BasicUploadS,
+      FileModal,
+      ASwitch: Switch,
+    },
     setup() {
       const { t } = useI18n();
       const { createMessage } = useMessage();
       const editorEl = ref(null);
+      const destination = ref('');
+      let uploadParams = computed(() => {
+        return {
+          destination: destination.value,
+        };
+      });
       const [registerModal, { openModal }] = useModal();
       const [openWrapLoading, closeWrapLoading] = useLoading({
         target: editorEl,
@@ -89,7 +110,6 @@
           absolute: true,
         },
       });
-      let destination = '';
       const data = reactive({
         value: '',
         editMode: MODE.HTML,
@@ -130,10 +150,6 @@
       }
 
       function handleCreate() {
-        if (destination == '') {
-          const res = getRawDataSource();
-          destination = res.destination;
-        }
         openModal(true, {
           destination: destination,
         });
@@ -165,6 +181,13 @@
         reload();
       }
 
+      function onFetchSuccess() {
+        if (destination.value == '') {
+          const res = getRawDataSource();
+          destination.value = res.destination;
+        }
+      }
+
       async function handleSave() {
         const values = {
           key: data.selected,
@@ -176,7 +199,7 @@
         closeWrapLoading();
       }
 
-      async function handleActive(checked) {
+      async function handleActive(checked: boolean) {
         const values = {
           key: data.selected,
           properties: {
@@ -200,6 +223,9 @@
         handleSuccess,
         handleSave,
         handleActive,
+        onFetchSuccess,
+        upload,
+        uploadParams,
         editorEl,
         ...toRefs(data),
       };

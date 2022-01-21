@@ -1,7 +1,14 @@
 import { defHttp } from '/@/utils/http/axios';
-import { GetKeyParams, BasicResult, SaveNodeParams, DownloadParams } from '/@/api/model/baseModel';
+import {
+  GetKeyParams,
+  BasicResult,
+  SaveNodeParams,
+  DownloadParams,
+  UploadResult,
+} from '/@/api/model/baseModel';
 import { downloadByUrl } from '/@/utils/file/download';
 import { getToken } from '/@/utils/auth';
+import { UploadFileParams } from '/#/axios';
 
 enum Api {
   GET_MASTER = '/idoc/pages/database/getmaster',
@@ -44,4 +51,18 @@ export async function deleteNode(key: String) {
   return defHttp.delete<any>({
     url: `/slingshot/doclib/action/file/node/workspace/SpacesStore/${key}`,
   });
+}
+
+export function upload(
+  params: UploadFileParams,
+  onUploadProgress: (progressEvent: ProgressEvent) => void,
+) {
+  const destination = params.data ? params.data.destination : '';
+  return defHttp.uploadFile<UploadResult>(
+    {
+      url: `proxy/alfresco/idoc/common/node/upload/workspace://SpacesStore/${destination}`,
+      onUploadProgress,
+    },
+    params,
+  );
 }
