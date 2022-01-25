@@ -38,7 +38,7 @@
 
   import { useDrawer } from '/@/components/Drawer';
   import SiteDrawer from './SiteDrawer.vue';
-  import { getSiteByPage, deleteSite } from '/@/api/system/site';
+  import { getSiteByPage, deleteSite } from '/@/api/admin/site';
   import { BasicDelParams } from '/@/api/model/baseModel';
 
   import { columns, searchFormSchema } from './data';

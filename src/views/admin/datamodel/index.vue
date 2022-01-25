@@ -77,8 +77,8 @@
   import FileModal from './FileModal.vue';
 
   import { columns } from './data';
-  import { GetModelContentResult } from '/@/api/system/model/modelModel';
-  import { getModelList, getModelContent } from '/@/api/system/model';
+  import { GetModelContentResult } from '/@/api/admin/model/modelModel';
+  import { getModelList, getModelContent } from '/@/api/admin/model';
   import { saveNode, download, deleteNode, upload } from '/@/api/common';
 
   export default defineComponent({

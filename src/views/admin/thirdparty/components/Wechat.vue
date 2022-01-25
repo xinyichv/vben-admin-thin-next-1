@@ -17,7 +17,7 @@
 
   import { useMessage } from '/@/hooks/web/useMessage';
 
-  import { getSysSetting, saveSysSetting } from '/@/api/system/thirdparty';
+  import { getSysSetting, saveSysSetting } from '/@/api/admin/thirdparty';
   import { wechatSetschemas } from '../data';
 
   export default defineComponent({

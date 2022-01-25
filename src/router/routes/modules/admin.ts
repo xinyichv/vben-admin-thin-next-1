@@ -3,7 +3,7 @@ import type { AppRouteModule } from '/@/router/types';
 import { LAYOUT } from '/@/router/constant';
 import { t } from '/@/hooks/web/useI18n';
 
-const system: AppRouteModule = {
+const admin: AppRouteModule = {
   path: '/admin',
   name: 'Admin',
   component: LAYOUT,
@@ -165,4 +165,4 @@ const system: AppRouteModule = {
   ],
 };
 
-export default system;
+export default admin;

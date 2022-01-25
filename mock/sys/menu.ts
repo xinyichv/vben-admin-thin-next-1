@@ -384,70 +384,70 @@ const personalRoute = {
   ],
 };
 const systemRoute = {
-  path: '/system',
-  name: 'System',
+  path: '/admin',
+  name: 'Admin',
   component: 'LAYOUT',
-  redirect: '/system/setting',
+  redirect: '/admin/setting',
   meta: {
     orderNo: 800,
     icon: 'ant-design:setting-filled',
-    title: 'routes.system.system',
+    title: 'routes.admin.system',
   },
   children: [
     {
       path: 'setting',
       name: 'Setting',
-      component: '/system/setting/index.vue',
+      component: '/admin/setting/index.vue',
       meta: {
-        title: 'routes.system.setting',
+        title: 'routes.admin.setting',
       },
     },
     {
       path: 'account',
       name: 'Account',
-      component: '/system/account/index.vue',
+      component: '/admin/account/index.vue',
       meta: {
-        title: 'routes.system.account',
+        title: 'routes.admin.account',
       },
     },
     {
       path: 'organize',
       name: 'Organize',
-      component: '/system/organize/index.vue',
+      component: '/admin/organize/index.vue',
       meta: {
-        title: 'routes.system.organize',
+        title: 'routes.admin.organize',
       },
     },
     {
       path: 'site',
       name: 'Site',
-      component: '/system/site/index.vue',
+      component: '/admin/site/index.vue',
       meta: {
-        title: 'routes.system.site',
+        title: 'routes.admin.site',
       },
     },
     {
       path: 'template',
       name: 'Template',
-      redirect: '/system/template/file',
+      redirect: '/admin/template/file',
       meta: {
-        title: 'routes.system.template.template',
+        title: 'routes.admin.template.template',
       },
       children: [
         {
           path: 'file',
           name: 'File',
-          component: '/system/template/file/index.vue',
+          component: '/admin/template/file/index.vue',
           meta: {
-            title: 'routes.system.template.file',
+            title: 'routes.admin.template.file',
           },
         },
         {
           path: 'folder',
           name: 'Folder',
-          component: '/system/template/folder/index.vue',
+          component: '/admin/template/folder/index.vue',
           meta: {
-            title: 'routes.system.template.folder',
+            title: 'routes.admin.template.folder',
           },
         },
       ],
@@ -455,89 +455,89 @@ const systemRoute = {
     {
       path: 'datadic',
       name: 'Datadic',
-      component: '/system/datadic/index.vue',
+      component: '/admin/datadic/index.vue',
       meta: {
-        title: 'routes.system.datadic',
+        title: 'routes.admin.datadic',
       },
     },
     {
       path: 'navigate',
       name: 'Navigate',
-      component: '/system/navigate/index.vue',
+      component: '/admin/navigate/index.vue',
       meta: {
-        title: 'routes.system.navigate',
+        title: 'routes.admin.navigate',
       },
     },
     {
       path: 'category',
       name: 'Category',
-      component: '/system/category/index.vue',
+      component: '/admin/category/index.vue',
       meta: {
-        title: 'routes.system.category',
+        title: 'routes.admin.category',
       },
     },
     {
       path: 'tag',
       name: 'Tag',
-      component: '/system/tag/index.vue',
+      component: '/admin/tag/index.vue',
       meta: {
-        title: 'routes.system.tag',
+        title: 'routes.admin.tag',
       },
     },
     {
       path: 'folderrule',
       name: 'Folderrule',
-      component: '/system/folderrule/index.vue',
+      component: '/admin/folderrule/index.vue',
       meta: {
-        title: 'routes.system.folderrule',
+        title: 'routes.admin.folderrule',
       },
     },
     {
-      path: 'dataModel',
+      path: 'datamodel',
       name: 'DataModel',
-      component: '/system/dataModel/index.vue',
+      component: '/admin/datamodel/index.vue',
       meta: {
-        title: 'routes.system.dataModel',
+        title: 'routes.admin.dataModel',
       },
     },
     {
       path: 'workflow',
       name: 'Workflow',
-      component: '/system/workflow/index.vue',
+      component: '/admin/workflow/index.vue',
       meta: {
-        title: 'routes.system.workflow',
+        title: 'routes.admin.workflow',
       },
     },
     {
       path: 'thirdparty',
       name: 'ThirdParty',
-      component: '/system/thirdparty/index.vue',
+      component: '/admin/thirdparty/index.vue',
       meta: {
-        title: 'routes.thirdparty.thirdparty',
+        title: 'routes.admin.thirdparty.thirdparty',
       },
     },
     {
       path: 'log',
       name: 'Log',
-      redirect: '/system/log/system',
+      redirect: '/admin/log/system',
       meta: {
-        title: 'routes.system.log.system',
+        title: 'routes.admin.log.system',
       },
       children: [
         {
           path: 'login',
           name: 'Login',
-          component: '/system/log/login/index.vue',
+          component: '/admin/log/login/index.vue',
           meta: {
-            title: 'routes.system.log.login',
+            title: 'routes.admin.log.login',
           },
         },
         {
           path: 'operation',
           name: 'Operation',
-          component: '/system/log/operation/index.vue',
+          component: '/admin/log/operation/index.vue',
           meta: {
-            title: 'routes.system.log.operation',
+            title: 'routes.admin.log.operation',
           },
         },
       ],

@@ -18,7 +18,7 @@
   import { useMessage } from '/@/hooks/web/useMessage';
   import { formSchema } from './data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { saveSite } from '/@/api/system/site';
+  import { saveSite } from '/@/api/admin/site';
 
   export default defineComponent({
     name: 'SiteDrawer',

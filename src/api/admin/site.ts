@@ -6,7 +6,7 @@ import {
   BasicDelParams,
   BasicBatchResult,
 } from '/@/api/model/baseModel';
-import { SaveSiteParams } from '/@/api/system/model/siteModel';
+import { SaveSiteParams } from './model/siteModel';
 
 enum Api {
   SEARCH_SITE = '/idoc/common/site/searchsite',

@@ -1,6 +1,6 @@
 import { defHttp } from '/@/utils/http/axios';
 import { tableModel } from '/@/api/model/baseModel';
-import { GetModelContentResult } from '/@/api/system/model/modelModel';
+import { GetModelContentResult } from './model/modelModel';
 
 enum Api {
   GET_MODEL_LIST = '/idoc/pages/model/getmodel',
