@@ -45,3 +45,34 @@ export interface GetUsersParams {
   groupId?: string;
   includeDisabled?: boolean;
 }
+
+export interface GetAuthoritiesParams {
+  authorityType?: string;
+  maxResults?: number;
+  filter?: string;
+}
+
+export interface CreateUserParams {
+  userName: string;
+  firstName: string;
+  lastName?: string;
+  email: string;
+  password: string;
+  groups: string[];
+  quota: number;
+  disableAccount: boolean;
+}
+
+export interface UpdateUserParams {
+  firstName: string;
+  lastName?: string;
+  email: string;
+  addGroups: string[];
+  removeGroups: string[];
+  quota: number;
+  disableAccount: boolean;
+}
+
+export interface ChangePasswordParams {
+  newpw: string;
+}

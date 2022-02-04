@@ -15,7 +15,7 @@
         <Tag v-else color="green"> {{ t('account.stsEnabled') }} </Tag>
       </template>
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate">{{ t('account.createUser') }}</a-button>
+        <a-button type="primary" @click="handleCreateUser">{{ t('account.createUser') }}</a-button>
       </template>
       <template #action="{ record }">
         <TableAction
@@ -43,7 +43,7 @@
         />
       </template>
     </BasicTable>
-    <AccountModal @register="registerModal" @success="handleSuccess" />
+    <UserDrawer @register="registerUserDrawer" @success="handleUserSuccess" />
   </PageWrapper>
 </template>
 <script lang="ts">
@@ -56,20 +56,20 @@
   import { PageWrapper } from '/@/components/Page';
   import GroupTree from './GroupTree.vue';
 
-  import { useModal } from '/@/components/Modal';
-  import AccountModal from './AccountModal.vue';
+  import { useDrawer } from '/@/components/Drawer';
+  import UserDrawer from './UserDrawer.vue';
 
   import { columns, searchFormSchema } from './data';
   import { useGo } from '/@/hooks/web/usePage';
 
   export default defineComponent({
     name: 'AccountManagement',
-    components: { Tag, BasicTable, PageWrapper, GroupTree, AccountModal, TableAction },
+    components: { Tag, BasicTable, PageWrapper, GroupTree, TableAction, UserDrawer },
     setup() {
       const { t } = useI18n();
       const go = useGo();
-      const [registerModal, { openModal }] = useModal();
       const searchInfo = reactive<Recordable>({});
+      const [registerUserDrawer, { openDrawer: openUserDrawer }] = useDrawer();
       const [registerTable, { reload, updateTableDataRecord }] = useTable({
         title: t('account.userList'),
         api: getUserByPage,
@@ -94,18 +94,18 @@
         },
       });
 
-      function handleCreate() {
-        openModal(true, {
+      function handleCreateUser() {
+        openUserDrawer(true, {
           isUpdate: false,
         });
       }
 
+      function handleUserSuccess() {
+        console.log('handleUserSuccess');
+      }
+
       function handleEdit(record: Recordable) {
         console.log(record);
-        openModal(true, {
-          record,
-          isUpdate: true,
-        });
       }
 
       function handleDelete(record: Recordable) {
@@ -135,8 +135,9 @@
       return {
         t,
         registerTable,
-        registerModal,
-        handleCreate,
+        registerUserDrawer,
+        handleCreateUser,
+        handleUserSuccess,
         handleEdit,
         handleDelete,
         handleSuccess,

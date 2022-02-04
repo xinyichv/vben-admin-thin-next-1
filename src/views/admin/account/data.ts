@@ -1,7 +1,7 @@
-import { getAllRoleList, isAccountExist } from '/@/api/demo/system';
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { useI18n } from '/@/hooks/web/useI18n';
+import { getAuthorities } from '/@/api/admin/account';
 
 const { t } = useI18n();
 
@@ -48,7 +48,7 @@ export const searchFormSchema: FormSchema[] = [
     field: 'userId',
     label: t('account.id'),
     component: 'Input',
-    colProps: { span: 5 },
+    colProps: { span: 6 },
   },
   {
     field: 'userName',
@@ -60,7 +60,7 @@ export const searchFormSchema: FormSchema[] = [
     field: 'status',
     component: 'Select',
     label: t('account.status'),
-    colProps: { span: 6 },
+    colProps: { span: 5 },
     componentProps: {
       options: [
         {
@@ -78,79 +78,89 @@ export const searchFormSchema: FormSchema[] = [
   },
 ];
 
-export const accountFormSchema: FormSchema[] = [
+export const userFormSchema: FormSchema[] = [
   {
-    field: 'account',
-    label: '用户名',
+    field: 'userName',
+    label: t('account.id'),
     component: 'Input',
-    helpMessage: ['本字段演示异步验证', '不能输入带有admin的用户名'],
+    required: true,
+  },
+  {
+    field: 'firstName',
+    label: t('account.name'),
+    component: 'Input',
+    required: true,
+  },
+  {
+    field: 'email',
+    label: t('account.email'),
+    component: 'Input',
+    required: true,
+  },
+  {
+    field: 'password',
+    label: t('account.password'),
+    component: 'StrengthMeter',
     rules: [
       {
         required: true,
-        message: '请输入用户名',
-      },
-      {
-        validator(_, value) {
-          return new Promise((resolve, reject) => {
-            isAccountExist(value)
-              .then(() => resolve())
-              .catch((err) => {
-                reject(err.message || '验证失败');
-              });
-          });
-        },
+        message: t('account.passwordRequired'),
       },
     ],
+    componentProps: {
+      autocomplete: 'new-password',
+      placeholder: t('common.inputText'),
+    },
   },
   {
-    field: 'pwd',
-    label: '密码',
+    field: 'passwordconfirm',
+    label: t('account.passwordConfirm'),
     component: 'InputPassword',
-    required: true,
-    ifShow: false,
+    dynamicRules: ({ values }) => {
+      return [
+        {
+          required: true,
+          validator: (_, value) => {
+            if (!value) {
+              return Promise.reject(t('account.passwordConfirmRequired'));
+            }
+            if (value !== values.password) {
+              return Promise.reject(t('account.passwordNotEqual'));
+            }
+            return Promise.resolve();
+          },
+        },
+      ];
+    },
   },
   {
-    label: '角色',
-    field: 'role',
+    field: 'groups',
+    label: t('account.organization'),
     component: 'ApiSelect',
     componentProps: {
-      api: getAllRoleList,
-      labelField: 'roleName',
-      valueField: 'roleValue',
-    },
-    required: true,
-  },
-  {
-    field: 'dept',
-    label: '所属部门',
-    component: 'TreeSelect',
-    componentProps: {
-      fieldNames: {
-        label: 'deptName',
-        key: 'id',
-        value: 'id',
+      api: getAuthorities,
+      params: {
+        authorityType: 'group',
+        maxResults: 500,
       },
-      getPopupContainer: () => document.body,
+      mode: 'multiple',
+      showSearch: true,
+      filterOption: false,
     },
-    required: true,
   },
   {
-    field: 'nickname',
-    label: '昵称',
-    component: 'Input',
-    required: true,
+    field: 'quata',
+    label: t('account.quata'),
+    component: 'InputNumber',
+    helpMessage: t('account.quataHelp'),
+    colProps: {
+      span: 8,
+    },
+    suffix: 'GB',
   },
-
   {
-    label: '邮箱',
-    field: 'email',
-    component: 'Input',
-    required: true,
-  },
-
-  {
-    label: '备注',
-    field: 'remark',
-    component: 'InputTextArea',
+    field: 'disableAccount',
+    label: t('account.disableAccount'),
+    component: 'Checkbox',
   },
 ];

@@ -1,10 +1,11 @@
 <template>
   <Select
-    @dropdownVisibleChange="handleFetch"
+    @dropdown-visible-change="handleFetch"
     v-bind="$attrs"
     @change="handleChange"
     :options="getOptions"
     v-model:value="state"
+    @search="handleSearch"
   >
     <template #[item]="data" v-for="item in Object.keys($slots)">
       <slot :name="item" v-bind="data || {}"></slot>
@@ -26,7 +27,7 @@
   import { isFunction } from '/@/utils/is';
   import { useRuleFormItem } from '/@/hooks/component/useFormItem';
   import { useAttrs } from '/@/hooks/core/useAttrs';
-  import { get, omit } from 'lodash-es';
+  import { get, omit, debounce } from 'lodash-es';
   import { LoadingOutlined } from '@ant-design/icons-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { propTypes } from '/@/utils/propTypes';
@@ -57,6 +58,7 @@
       labelField: propTypes.string.def('label'),
       valueField: propTypes.string.def('value'),
       immediate: propTypes.bool.def(true),
+      alwaysLoad: propTypes.bool.def(false),
     },
     emits: ['options-change', 'change'],
     setup(props, { emit }) {
@@ -87,7 +89,7 @@
       });
 
       watchEffect(() => {
-        props.immediate && fetch();
+        props.immediate && !props.alwaysLoad && fetch();
       });
 
       watch(
@@ -121,12 +123,21 @@
         }
       }
 
-      async function handleFetch() {
-        if (!props.immediate && unref(isFirstLoad)) {
-          await fetch();
-          isFirstLoad.value = false;
+      async function handleFetch(visible) {
+        if (visible) {
+          if (props.alwaysLoad) {
+            await fetch();
+          } else if (!props.immediate && unref(isFirstLoad)) {
+            await fetch();
+            isFirstLoad.value = false;
+          }
         }
       }
+
+      const handleSearch = debounce((value) => {
+        // eslint-disable-next-line vue/no-mutating-props
+        props.params.filter = value;
+      }, 300);
 
       function emitChange() {
         emit('options-change', unref(getOptions));
@@ -136,7 +147,7 @@
         emitData.value = args;
       }
 
-      return { state, attrs, getOptions, loading, t, handleFetch, handleChange };
+      return { state, attrs, getOptions, loading, t, handleFetch, handleChange, handleSearch };
     },
   });
 </script>
