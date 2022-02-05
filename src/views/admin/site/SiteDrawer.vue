@@ -38,7 +38,6 @@
       });
 
       const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-        key = '';
         resetFields();
         setDrawerProps({ confirmLoading: false });
 

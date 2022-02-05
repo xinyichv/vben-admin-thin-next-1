@@ -2,6 +2,7 @@ export default {
   system: '系统管理',
   setting: '系统设置',
   account: '账号管理',
+  accountDetail: '账号详情',
   organize: '组织管理',
   site: '站点管理',
   template: {

@@ -411,6 +411,18 @@ const systemRoute = {
       },
     },
     {
+      path: 'account_detail/:id',
+      name: 'AccountDetail',
+      component: '/admin/account/AccountDetail.vue',
+      meta: {
+        hideMenu: true,
+        title: 'routes.admin.accountDetail',
+        ignoreKeepAlive: true,
+        showMenu: false,
+        currentActiveMenu: '/admin/account',
+      },
+    },
+    {
       path: 'organize',
       name: 'Organize',
       component: '/admin/organize/index.vue',

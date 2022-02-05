@@ -11,7 +11,7 @@ const admin: AppRouteModule = {
   meta: {
     orderNo: 800,
     icon: 'ant-design:setting-filled',
-    title: t('routes.system.system'),
+    title: t('routes.admin.system'),
   },
   children: [
     {
@@ -19,7 +19,7 @@ const admin: AppRouteModule = {
       name: 'SysSetting',
       component: () => import('/@/views/admin/syssetting/index.vue'),
       meta: {
-        title: t('routes.system.setting'),
+        title: t('routes.admin.setting'),
       },
     },
     {
@@ -27,15 +27,27 @@ const admin: AppRouteModule = {
       name: 'Account',
       component: () => import('/@/views/admin/account/index.vue'),
       meta: {
-        title: t('routes.system.account'),
+        title: t('routes.admin.account'),
       },
+    },
+    {
+      path: 'account_detail/:id',
+      name: 'AccountDetail',
+      meta: {
+        hideMenu: true,
+        title: t('routes.admin.accountDetail'),
+        ignoreKeepAlive: true,
+        showMenu: false,
+        currentActiveMenu: '/admin/account',
+      },
+      component: () => import('/@/views/admin/account/AccountDetail.vue'),
     },
     {
       path: 'organize',
       name: 'Organize',
       component: () => import('/@/views/admin/organize/index.vue'),
       meta: {
-        title: t('routes.system.organize'),
+        title: t('routes.admin.organize'),
       },
     },
     {
@@ -43,7 +55,7 @@ const admin: AppRouteModule = {
       name: 'Site',
       component: () => import('/@/views/admin/site/index.vue'),
       meta: {
-        title: t('routes.system.site'),
+        title: t('routes.admin.site'),
       },
     },
     {
@@ -51,7 +63,7 @@ const admin: AppRouteModule = {
       name: 'Template',
       redirect: '/admin/template/file',
       meta: {
-        title: t('routes.system.template.template'),
+        title: t('routes.admin.template.template'),
       },
       children: [
         {
@@ -59,7 +71,7 @@ const admin: AppRouteModule = {
           name: 'File',
           component: () => import('/@/views/admin/template/file/index.vue'),
           meta: {
-            title: t('routes.system.template.file'),
+            title: t('routes.admin.template.file'),
           },
         },
         {
@@ -67,7 +79,7 @@ const admin: AppRouteModule = {
           name: 'Folder',
           component: () => import('/@/views/admin/template/folder/index.vue'),
           meta: {
-            title: t('routes.system.template.folder'),
+            title: t('routes.admin.template.folder'),
           },
         },
       ],
@@ -77,7 +89,7 @@ const admin: AppRouteModule = {
       name: 'Datadic',
       component: () => import('/@/views/admin/datadic/index.vue'),
       meta: {
-        title: t('routes.system.datadic'),
+        title: t('routes.admin.datadic'),
       },
     },
     {
@@ -85,7 +97,7 @@ const admin: AppRouteModule = {
       name: 'Navigate',
       component: () => import('/@/views/admin/navigate/index.vue'),
       meta: {
-        title: t('routes.system.navigate'),
+        title: t('routes.admin.navigate'),
       },
     },
     {
@@ -93,7 +105,7 @@ const admin: AppRouteModule = {
       name: 'Category',
       component: () => import('/@/views/admin/category/index.vue'),
       meta: {
-        title: t('routes.system.category'),
+        title: t('routes.admin.category'),
       },
     },
     {
@@ -101,7 +113,7 @@ const admin: AppRouteModule = {
       name: 'Tag',
       component: () => import('/@/views/admin/tag/index.vue'),
       meta: {
-        title: t('routes.system.tag'),
+        title: t('routes.admin.tag'),
       },
     },
     {
@@ -109,7 +121,7 @@ const admin: AppRouteModule = {
       name: 'Folderrule',
       component: () => import('/@/views/admin/folderrule/index.vue'),
       meta: {
-        title: t('routes.system.folderrule'),
+        title: t('routes.admin.folderrule'),
       },
     },
     {
@@ -117,7 +129,7 @@ const admin: AppRouteModule = {
       name: 'DataModel',
       component: () => import('/@/views/admin/datamodel/index.vue'),
       meta: {
-        title: t('routes.system.dataModel'),
+        title: t('routes.admin.dataModel'),
       },
     },
     {
@@ -125,7 +137,7 @@ const admin: AppRouteModule = {
       name: 'Workflow',
       component: () => import('/@/views/admin/workflow/index.vue'),
       meta: {
-        title: t('routes.system.workflow'),
+        title: t('routes.admin.workflow'),
       },
     },
     {
@@ -141,7 +153,7 @@ const admin: AppRouteModule = {
       name: 'Log',
       redirect: '/admin/log/login',
       meta: {
-        title: t('routes.system.log.system'),
+        title: t('routes.admin.log.system'),
       },
       children: [
         {
@@ -149,7 +161,7 @@ const admin: AppRouteModule = {
           name: 'Login',
           component: () => import('/@/views/admin/log/login/index.vue'),
           meta: {
-            title: t('routes.system.log.login'),
+            title: t('routes.admin.log.login'),
           },
         },
         {
@@ -157,7 +169,7 @@ const admin: AppRouteModule = {
           name: 'Operation',
           component: () => import('/@/views/admin/log/operation/index.vue'),
           meta: {
-            title: t('routes.system.log.operation'),
+            title: t('routes.admin.log.operation'),
           },
         },
       ],

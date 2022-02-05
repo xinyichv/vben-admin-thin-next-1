@@ -12,13 +12,13 @@
   </BasicDrawer>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, computed, unref } from 'vue';
+  import { defineComponent, ref, reactive, computed, unref } from 'vue';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { userFormSchema } from './data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { createUser } from '/@/api/admin/account';
+  import { createUser, getUserInfo } from '/@/api/admin/account';
 
   export default defineComponent({
     name: 'UserDrawer',
@@ -38,7 +38,6 @@
       });
 
       const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-        key = '';
         resetFields();
         setDrawerProps({ confirmLoading: false });
 
@@ -46,8 +45,19 @@
 
         if (unref(isUpdate)) {
           key = data.record.key;
-          setFieldsValue({
-            ...data.record,
+          getUserInfo(key, {
+            groups: true,
+          }).then((res) => {
+            const userInfo = reactive(res);
+            const groups = userInfo.groups;
+            let newGroups: string[] = [];
+            for (var i = 0; i < groups.length; i++) {
+              newGroups.push(groups[i].displayName);
+            }
+            setFieldsValue({
+              ...userInfo,
+              groups: newGroups,
+            });
           });
         }
       });
@@ -60,6 +70,9 @@
         try {
           let values = await validate();
           values.key = key;
+          if (values.quota && values.quota > 0) {
+            values.quota = values.quota * 1024 * 1024 * 1024;
+          }
 
           setDrawerProps({ confirmLoading: true });
           await createUser(values);

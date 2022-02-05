@@ -24,7 +24,9 @@ export default {
   passwordConfirmRequired: '确认密码不能为空',
   passwordNotEqual: '两次输入的密码不一致！',
   passwordRequired: '请输入密码',
-  quata: '空间容量',
-  quataHelp: '不限制账户空间容量，请留空',
+  quota: '空间容量',
+  quotaHelp: '不限制账户空间容量，请留空',
   disableAccount: '禁用账户',
+  emailHelp: '请输入正确的邮箱格式',
+  changePwdHelp: '如无需修改密码，请留空',
 };

@@ -5,6 +5,7 @@ export default {
   closeText: '关闭',
   cancelText: '取消',
   loadingText: '加载中...',
+  readingText: '读取中...',
   saveText: '保存',
   delText: '删除',
   delConfirm: '是否确认删除',

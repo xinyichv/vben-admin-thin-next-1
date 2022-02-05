@@ -23,12 +23,12 @@
             {
               icon: 'ant-design:info-circle-outlined',
               tooltip: t('account.viewUser'),
-              onClick: handleView.bind(null, record),
+              onClick: handleViewUser.bind(null, record),
             },
             {
               icon: 'ant-design:edit-outlined',
               tooltip: t('account.editUser'),
-              onClick: handleEdit.bind(null, record),
+              onClick: handleEditUser.bind(null, record),
             },
             {
               icon: 'ant-design:delete-outlined',
@@ -36,7 +36,10 @@
               tooltip: t('account.deleteUser'),
               popConfirm: {
                 title: t('common.delConfirm'),
-                confirm: handleDelete.bind(null, record),
+                confirm: handleDeleteUser.bind(null, record),
+              },
+              ifShow: (_action) => {
+                return record.key !== 'admin' && record.key !== 'guest';
               },
             },
           ]"
@@ -44,6 +47,7 @@
       </template>
     </BasicTable>
     <UserDrawer @register="registerUserDrawer" @success="handleUserSuccess" />
+    <UserEditDrawer @register="registerUserEditDrawer" @success="handleUserSuccess" />
   </PageWrapper>
 </template>
 <script lang="ts">
@@ -51,25 +55,37 @@
   import { Tag } from 'ant-design-vue';
 
   import { useI18n } from '/@/hooks/web/useI18n';
+  import { useMessage } from '/@/hooks/web/useMessage';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getUserByPage } from '/@/api/admin/account';
+  import { deleteUser, getUserByPage } from '/@/api/admin/account';
   import { PageWrapper } from '/@/components/Page';
   import GroupTree from './GroupTree.vue';
 
   import { useDrawer } from '/@/components/Drawer';
   import UserDrawer from './UserDrawer.vue';
+  import UserEditDrawer from './UserEditDrawer.vue';
 
   import { columns, searchFormSchema } from './data';
   import { useGo } from '/@/hooks/web/usePage';
 
   export default defineComponent({
     name: 'AccountManagement',
-    components: { Tag, BasicTable, PageWrapper, GroupTree, TableAction, UserDrawer },
+    components: {
+      Tag,
+      BasicTable,
+      PageWrapper,
+      GroupTree,
+      TableAction,
+      UserDrawer,
+      UserEditDrawer,
+    },
     setup() {
       const { t } = useI18n();
+      const { createMessage } = useMessage();
       const go = useGo();
       const searchInfo = reactive<Recordable>({});
       const [registerUserDrawer, { openDrawer: openUserDrawer }] = useDrawer();
+      const [registerUserEditDrawer, { openDrawer: openUserEditDrawer }] = useDrawer();
       const [registerTable, { reload, updateTableDataRecord }] = useTable({
         title: t('account.userList'),
         api: getUserByPage,
@@ -101,15 +117,24 @@
       }
 
       function handleUserSuccess() {
-        console.log('handleUserSuccess');
+        reload();
       }
 
-      function handleEdit(record: Recordable) {
-        console.log(record);
+      function handleViewUser(record: Recordable) {
+        go('/admin/account_detail/' + record.key);
       }
 
-      function handleDelete(record: Recordable) {
-        console.log(record);
+      function handleEditUser(record: Recordable) {
+        openUserEditDrawer(true, {
+          record,
+        });
+      }
+
+      function handleDeleteUser(record: Recordable) {
+        deleteUser(record.key).then(() => {
+          createMessage.success(t('common.delSuccess'));
+          reload();
+        });
       }
 
       function handleSuccess({ isUpdate, values }) {
@@ -128,21 +153,18 @@
         reload();
       }
 
-      function handleView(record: Recordable) {
-        go('/system/account_detail/' + record.id);
-      }
-
       return {
         t,
         registerTable,
         registerUserDrawer,
+        registerUserEditDrawer,
         handleCreateUser,
         handleUserSuccess,
-        handleEdit,
-        handleDelete,
+        handleViewUser,
+        handleEditUser,
+        handleDeleteUser,
         handleSuccess,
         handleSelect,
-        handleView,
         searchInfo,
       };
     },

@@ -10,11 +10,13 @@ export const columns: BasicColumn[] = [
     title: t('account.id'),
     dataIndex: 'key',
     width: 120,
+    sorter: true,
   },
   {
     title: t('account.name'),
     dataIndex: 'cm_firstName',
     width: 120,
+    sorter: true,
   },
   {
     title: t('account.email'),
@@ -95,7 +97,15 @@ export const userFormSchema: FormSchema[] = [
     field: 'email',
     label: t('account.email'),
     component: 'Input',
-    required: true,
+    rules: [
+      {
+        required: true,
+      },
+      {
+        type: 'email',
+        message: t('account.emailHelp'),
+      },
+    ],
   },
   {
     field: 'password',
@@ -149,10 +159,10 @@ export const userFormSchema: FormSchema[] = [
     },
   },
   {
-    field: 'quata',
-    label: t('account.quata'),
+    field: 'quota',
+    label: t('account.quota'),
     component: 'InputNumber',
-    helpMessage: t('account.quataHelp'),
+    helpMessage: t('account.quotaHelp'),
     colProps: {
       span: 8,
     },
@@ -162,5 +172,108 @@ export const userFormSchema: FormSchema[] = [
     field: 'disableAccount',
     label: t('account.disableAccount'),
     component: 'Checkbox',
+  },
+];
+
+export const userEditFormSchema: FormSchema[] = [
+  {
+    field: 'userName',
+    label: t('account.id'),
+    component: 'Input',
+    componentProps: {
+      disabled: true,
+    },
+  },
+  {
+    field: 'firstName',
+    label: t('account.name'),
+    component: 'Input',
+    required: true,
+  },
+  {
+    field: 'email',
+    label: t('account.email'),
+    component: 'Input',
+    rules: [
+      {
+        required: true,
+      },
+      {
+        type: 'email',
+        message: t('account.emailHelp'),
+      },
+    ],
+  },
+  {
+    field: 'groups',
+    label: t('account.organization'),
+    component: 'ApiSelect',
+    componentProps: {
+      api: getAuthorities,
+      params: {
+        authorityType: 'group',
+        maxResults: 500,
+      },
+      immediate: true,
+      mode: 'multiple',
+      showSearch: true,
+      filterOption: false,
+    },
+  },
+  {
+    field: 'quota',
+    label: t('account.quota'),
+    component: 'InputNumber',
+    helpMessage: t('account.quotaHelp'),
+    colProps: {
+      span: 8,
+    },
+    suffix: 'GB',
+  },
+  {
+    field: 'disableAccount',
+    label: t('account.disableAccount'),
+    component: 'Checkbox',
+  },
+  {
+    field: 'dividerPassword',
+    label: t('account.changePwdHelp'),
+    component: 'Divider',
+    componentProps: {
+      orientation: 'left',
+    },
+  },
+  {
+    field: 'password',
+    label: t('account.password'),
+    component: 'StrengthMeter',
+    componentProps: {
+      autocomplete: 'new-password',
+      placeholder: t('common.inputText'),
+    },
+  },
+  {
+    field: 'passwordconfirm',
+    label: t('account.passwordConfirm'),
+    component: 'InputPassword',
+    dynamicRules: ({ values }) => {
+      return [
+        {
+          validator: (_, value) => {
+            console.log('value', value);
+            console.log('values', values);
+            if (values.password && values.password != '') {
+              if (!value) {
+                return Promise.reject(t('account.passwordConfirmRequired'));
+              }
+              if (value !== values.password) {
+                return Promise.reject(t('account.passwordNotEqual'));
+              }
+            }
+            return Promise.resolve();
+          },
+        },
+      ];
+    },
   },
 ];

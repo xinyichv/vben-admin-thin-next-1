@@ -8,6 +8,8 @@ import {
   CreateUserParams,
   UpdateUserParams,
   ChangePasswordParams,
+  GetUserInfoParams,
+  GetUserInfoResult,
 } from './model/account';
 import { TreeItem } from '/@/components/Tree';
 import { GroupsSortByEnum } from '/@/enums/accountEnum';
@@ -18,6 +20,8 @@ enum Api {
   GET_AUTHORITIES = '/idoc/common/user/searchauthorities',
   SAVE_USER = '/api/people',
   CHANGE_PASSWORD = '/api/person/changepassword',
+  GET_USERINFO = '/api/people',
+  DELETE_USER = '/api/people',
 }
 
 export async function getRootGroups(params: GetGroupsParams | null) {
@@ -68,8 +72,15 @@ export function createUser(params: CreateUserParams) {
   });
 }
 
+export function getUserInfo(userId: string, params: GetUserInfoParams) {
+  return defHttp.get<any>({
+    url: `${Api.GET_USERINFO}/${userId}`,
+    params,
+  });
+}
+
 export function updateUser(key: string, params: UpdateUserParams) {
-  return defHttp.put<any>({
+  return defHttp.put<GetUserInfoResult>({
     url: `${Api.SAVE_USER}/${key}`,
     params,
   });
@@ -79,5 +90,11 @@ export function changePassword(key: string, params: ChangePasswordParams) {
   return defHttp.post<any>({
     url: `${Api.CHANGE_PASSWORD}/${key}`,
     params,
+  });
+}
+
+export function deleteUser(key: string) {
+  return defHttp.delete<GetUserInfoResult>({
+    url: `${Api.DELETE_USER}/${key}`,
   });
 }

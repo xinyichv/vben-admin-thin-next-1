@@ -76,3 +76,29 @@ export interface UpdateUserParams {
 export interface ChangePasswordParams {
   newpw: string;
 }
+
+export interface GetUserInfoParams {
+  groups?: boolean;
+}
+
+export interface Capabilities {
+  isAdmin: boolean;
+  isGuest: boolean;
+  isMutable: boolean;
+}
+
+export interface Groups {
+  itemName: string;
+  displayName: string;
+}
+
+export interface GetUserInfoResult {
+  capabilities: Capabilities;
+  userName: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  groups?: Groups[];
+  enabled: boolean;
+  quota: number;
+}

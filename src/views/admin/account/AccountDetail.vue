@@ -1,7 +1,7 @@
 <template>
   <PageWrapper
     :title="`用户` + userId + `的资料`"
-    content="这是用户资料详情页面。本页面仅用于演示相同路由在tab中打开多个页面并且显示不同的数据"
+    content="这是用户资料详情页面。具体功能开发中。"
     contentBackground
     @back="goBack"
   >
@@ -29,8 +29,8 @@
 <script>
   import { defineComponent, ref } from 'vue';
   import { useRoute } from 'vue-router';
+  import { router } from '/@/router';
   import { PageWrapper } from '/@/components/Page';
-  import { useGo } from '/@/hooks/web/usePage';
   import { useTabs } from '/@/hooks/web/useTabs';
   import { Tabs } from 'ant-design-vue';
   export default defineComponent({
@@ -38,7 +38,6 @@
     components: { PageWrapper, ATabs: Tabs, ATabPane: Tabs.TabPane },
     setup() {
       const route = useRoute();
-      const go = useGo();
       // 此处可以得到用户ID
       const userId = ref(route.params?.id);
       const currentKey = ref('detail');
@@ -49,10 +48,9 @@
       // 设置Tab的标题（不会影响页面标题）
       setTitle('详情：用户' + userId.value);
 
-      // 页面左侧点击返回链接时的操作
+      // 页面左侧点击返回上一页面
       function goBack() {
-        // 本例的效果时点击返回始终跳转到账号列表页，实际应用时可返回上一页
-        go('/system/account');
+        router.back();
       }
       return { userId, currentKey, goBack };
     },
