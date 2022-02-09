@@ -21,8 +21,9 @@
   import { userEditFormSchema } from './data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { getUserInfo, updateUser, changePassword } from '/@/api/admin/account';
-  import { ChangePasswordParams } from '/@/api/admin/model/account';
+  import { ChangePasswordParams, GetUserInfoResult } from '/@/api/admin/model/account';
   import { useLoading } from '/@/components/Loading';
+  import { difference } from 'lodash-es';
 
   export default defineComponent({
     name: 'UserEditDrawer',
@@ -33,6 +34,7 @@
       const { createMessage } = useMessage();
       const drawerEl = ref(null);
       let key = '';
+      let oGroups: string[] = [];
 
       const [openWrapLoading, closeWrapLoading] = useLoading({
         target: drawerEl,
@@ -50,6 +52,8 @@
       });
 
       const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
+        key = '';
+        oGroups = [];
         resetFields();
         setDrawerProps({ confirmLoading: false });
 
@@ -57,27 +61,28 @@
         openWrapLoading();
         getUserInfo(key, {
           groups: true,
-        }).then((res) => {
-          const userInfo = reactive(res);
-          const groups = userInfo.groups;
-          let newGroups: string[] = [];
-          for (var i = 0; i < groups.length; i++) {
-            newGroups.push(groups[i].displayName);
-          }
-          let quota = userInfo.quota;
-          if (quota == -1) {
-            quota = '';
-          } else {
-            quota = (quota / 1024 / 1024 / 1024).toFixed(2);
-          }
-          setFieldsValue({
-            ...userInfo,
-            groups: newGroups,
-            quota,
-            disableAccount: userInfo.enabled ? false : true,
+        })
+          .then((res: GetUserInfoResult) => {
+            const userInfo: GetUserInfoResult = reactive(res);
+            const groups = data.record.groups;
+            for (var i = 0; i < groups.length; i++) {
+              oGroups.push(groups[i].id);
+            }
+            let quota = userInfo.quota;
+            let newQuota = '';
+            if (quota != -1) {
+              newQuota = (quota / 1024 / 1024 / 1024).toFixed(2);
+            }
+            setFieldsValue({
+              ...userInfo,
+              groups: oGroups,
+              quota: newQuota,
+              disableAccount: userInfo.enabled ? false : true,
+            });
+          })
+          .finally(() => {
+            closeWrapLoading();
           });
-          closeWrapLoading();
-        });
       });
 
       async function handleSubmit() {
@@ -88,6 +93,11 @@
           } else {
             values.quota = -1;
           }
+          const nGroups = values.groups;
+          const addGroups = difference(nGroups, oGroups);
+          const removeGroups = difference(oGroups, nGroups);
+          values.addGroups = addGroups;
+          values.removeGroups = removeGroups;
           setDrawerProps({ confirmLoading: true });
           updateUser(key, values).then(() => {
             if (values.password && values.password != '') {

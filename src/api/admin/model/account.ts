@@ -1,8 +1,8 @@
 export interface GetGroupsParams {
   shortNameFilter?: string;
   zone?: string;
-  maxItems: string;
-  skipCount?: string;
+  maxItems: number;
+  skipCount?: number;
   sortBy?: string;
 }
 
@@ -101,4 +101,15 @@ export interface GetUserInfoResult {
   groups?: Groups[];
   enabled: boolean;
   quota: number;
+}
+
+export interface ImportResult {
+  result: string;
+  msg: string;
+  add: number;
+  delete: number;
+}
+
+export interface UpdateGroupParams {
+  displayName: string;
 }

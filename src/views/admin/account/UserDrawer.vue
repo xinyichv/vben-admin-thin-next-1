@@ -39,6 +39,7 @@
 
       const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
         resetFields();
+        key = '';
         setDrawerProps({ confirmLoading: false });
 
         isUpdate.value = !!data?.isUpdate;
@@ -49,7 +50,7 @@
             groups: true,
           }).then((res) => {
             const userInfo = reactive(res);
-            const groups = userInfo.groups;
+            const groups = userInfo.groups ? userInfo.groups : [];
             let newGroups: string[] = [];
             for (var i = 0; i < groups.length; i++) {
               newGroups.push(groups[i].displayName);

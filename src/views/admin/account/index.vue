@@ -16,6 +16,34 @@
       </template>
       <template #toolbar>
         <a-button type="primary" @click="handleCreateUser">{{ t('account.createUser') }}</a-button>
+        <a-dropdown>
+          <a-button>
+            {{ t('common.import') }}
+            <DownOutlined />
+          </a-button>
+          <template #overlay>
+            <a-menu>
+              <a-menu-item key="1" @click="handleIpWechat">
+                <WechatOutlined />
+                {{ t('account.importWechat') }}
+              </a-menu-item>
+              <a-menu-item key="2">
+                <DingdingOutlined />
+                {{ t('account.importDingding') }}
+              </a-menu-item>
+              <a-menu-item key="3">{{ t('account.interfaceSetting') }}</a-menu-item>
+              <a-menu-divider />
+              <a-menu-item key="4">
+                <FileExcelOutlined />
+                {{ t('account.importExcel') }}
+              </a-menu-item>
+              <a-sub-menu key="5" :title="t('account.downloadTemplate')">
+                <a-menu-item key="5_1">{{ t('account.dtxls') }}</a-menu-item>
+                <a-menu-item key="5_2">{{ t('account.dtxlsx') }}</a-menu-item>
+              </a-sub-menu>
+            </a-menu>
+          </template>
+        </a-dropdown>
       </template>
       <template #action="{ record }">
         <TableAction
@@ -52,12 +80,19 @@
 </template>
 <script lang="ts">
   import { defineComponent, reactive } from 'vue';
-  import { Tag } from 'ant-design-vue';
+  import { Tag, Dropdown, Menu } from 'ant-design-vue';
+  import {
+    DownOutlined,
+    WechatOutlined,
+    DingdingOutlined,
+    FileExcelOutlined,
+  } from '@ant-design/icons-vue';
 
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { deleteUser, getUserByPage } from '/@/api/admin/account';
+  import { deleteUser, getUserByPage, importWechat } from '/@/api/admin/account';
+  import { ImportResult } from '/@/api/admin/model/account';
   import { PageWrapper } from '/@/components/Page';
   import GroupTree from './GroupTree.vue';
 
@@ -67,11 +102,21 @@
 
   import { columns, searchFormSchema } from './data';
   import { useGo } from '/@/hooks/web/usePage';
+  import { useLoading } from '/@/components/Loading';
 
   export default defineComponent({
     name: 'AccountManagement',
     components: {
       Tag,
+      ADropdown: Dropdown,
+      AMenu: Menu,
+      AMenuItem: Menu.Item,
+      AMenuDivider: Menu.Divider,
+      ASubMenu: Menu.SubMenu,
+      DownOutlined,
+      WechatOutlined,
+      DingdingOutlined,
+      FileExcelOutlined,
       BasicTable,
       PageWrapper,
       GroupTree,
@@ -81,12 +126,15 @@
     },
     setup() {
       const { t } = useI18n();
-      const { createMessage } = useMessage();
+      const { createMessage, createConfirm } = useMessage();
       const go = useGo();
       const searchInfo = reactive<Recordable>({});
+      const [openFullLoading, closeFullLoading] = useLoading({
+        tip: t('common.actioningText'),
+      });
       const [registerUserDrawer, { openDrawer: openUserDrawer }] = useDrawer();
       const [registerUserEditDrawer, { openDrawer: openUserEditDrawer }] = useDrawer();
-      const [registerTable, { reload, updateTableDataRecord }] = useTable({
+      const [registerTable, { reload }] = useTable({
         title: t('account.userList'),
         api: getUserByPage,
         columns,
@@ -99,7 +147,6 @@
         showTableSetting: true,
         bordered: true,
         handleSearchInfoFn(info) {
-          console.log('handleSearchInfoFn', info);
           return info;
         },
         actionColumn: {
@@ -131,26 +178,47 @@
       }
 
       function handleDeleteUser(record: Recordable) {
-        deleteUser(record.key).then(() => {
-          createMessage.success(t('common.delSuccess'));
-          reload();
-        });
-      }
-
-      function handleSuccess({ isUpdate, values }) {
-        if (isUpdate) {
-          // 演示不刷新表格直接更新内部数据。
-          // 注意：updateTableDataRecord要求表格的rowKey属性为string并且存在于每一行的record的keys中
-          const result = updateTableDataRecord(values.id, values);
-          console.log(result);
-        } else {
-          reload();
-        }
+        openFullLoading();
+        deleteUser(record.key)
+          .then(() => {
+            createMessage.success(t('common.delSuccess'));
+            reload();
+          })
+          .finally(() => {
+            closeFullLoading();
+          });
       }
 
       function handleSelect(groupId = '') {
         searchInfo.groupId = groupId;
         reload();
+      }
+
+      function handleIpWechat() {
+        createConfirm({
+          iconType: 'warning',
+          title: t('account.ipWechatTitle'),
+          content: t('account.ipWechatContent'),
+          onOk() {
+            openFullLoading();
+            importWechat()
+              .then((res: ImportResult) => {
+                if (res.result == 'success') {
+                  let msg =
+                    t('account.importSuccessAdd') +
+                    res.add +
+                    t('account.importSuccessDel') +
+                    res.delete;
+                  createMessage.success(msg);
+                } else {
+                  createMessage.error(res.msg);
+                }
+              })
+              .finally(() => {
+                closeFullLoading();
+              });
+          },
+        });
       }
 
       return {
@@ -163,9 +231,9 @@
         handleViewUser,
         handleEditUser,
         handleDeleteUser,
-        handleSuccess,
         handleSelect,
         searchInfo,
+        handleIpWechat,
       };
     },
   });

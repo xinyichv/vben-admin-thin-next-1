@@ -235,12 +235,14 @@ export class VAxios {
             return;
           }
           if (axios.isAxiosError(e)) {
-            if (e.response) {
-              createMessage.error(t(e.response.data.message) || t('common.actionFail'));
-            } else {
-              createMessage.error(e.message);
+            if (opt.errorMessageMode != 'none') {
+              if (e.response) {
+                createMessage.error(t(e.response.data.message) || t('common.actionFail'));
+              } else {
+                createMessage.error(e.message);
+              }
+              return;
             }
-            return;
           }
           reject(e);
         });

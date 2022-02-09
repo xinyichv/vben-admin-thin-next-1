@@ -260,8 +260,6 @@ export const userEditFormSchema: FormSchema[] = [
       return [
         {
           validator: (_, value) => {
-            console.log('value', value);
-            console.log('values', values);
             if (values.password && values.password != '') {
               if (!value) {
                 return Promise.reject(t('account.passwordConfirmRequired'));
@@ -274,6 +272,91 @@ export const userEditFormSchema: FormSchema[] = [
           },
         },
       ];
+    },
+  },
+];
+
+export const groupFormSchema: FormSchema[] = [
+  {
+    field: 'key',
+    label: 'key',
+    component: 'Input',
+    show: false,
+  },
+  {
+    field: 'createType',
+    label: t('account.createType'),
+    component: 'RadioButtonGroup',
+    defaultValue: '0',
+    componentProps: {
+      options: [
+        { label: t('account.createTypeNew'), value: '0' },
+        { label: t('account.createTypeAdd'), value: '1' },
+      ],
+    },
+    colProps: { lg: 24, md: 24 },
+    ifShow: ({ values }) => {
+      return values.key == '';
+    },
+  },
+  {
+    field: 'groupId',
+    label: t('account.groupId'),
+    component: 'Input',
+    required: true,
+    dynamicDisabled: ({ values }) => {
+      return values.key != '';
+    },
+    ifShow: ({ values }) => {
+      return values.createType == '0';
+    },
+  },
+  {
+    field: 'groupName',
+    label: t('account.groupName'),
+    component: 'Input',
+    required: true,
+    ifShow: ({ values }) => {
+      return values.createType == '0';
+    },
+  },
+  {
+    field: 'parentGroup',
+    label: t('account.parentGroup'),
+    component: 'ApiSelect',
+    componentProps: {
+      api: getAuthorities,
+      params: {
+        authorityType: 'group',
+        maxResults: 500,
+      },
+      immediate: true,
+      showSearch: true,
+      filterOption: false,
+    },
+    dynamicDisabled: ({ values }) => {
+      return values.createType == '1';
+    },
+    ifShow: ({ values }) => {
+      return values.key == '';
+    },
+  },
+  {
+    field: 'childGroup',
+    label: t('account.childGroup'),
+    component: 'ApiSelect',
+    componentProps: {
+      api: getAuthorities,
+      params: {
+        authorityType: 'group',
+        maxResults: 500,
+      },
+      immediate: false,
+      showSearch: true,
+      filterOption: false,
+    },
+    ifShow: ({ values }) => {
+      return values.createType == '1';
     },
   },
 ];

@@ -6,6 +6,7 @@ export default {
   cancelText: '取消',
   loadingText: '加载中...',
   readingText: '读取中...',
+  importingText: '导入中...',
   saveText: '保存',
   delText: '删除',
   delConfirm: '是否确认删除',
@@ -17,6 +18,7 @@ export default {
   saveSuccessWait: '保存成功！请稍后手动刷新页面。',
   actionFail: '操作失败，请重试或联络系统管理员！',
   delSuccess: '删除成功!',
+  removeSuccess: '移除成功！',
 
   inputText: '请输入',
   chooseText: '请选择',
@@ -40,4 +42,6 @@ export default {
   rename: '重命名',
   download: '下载',
   create: '创建',
+  import: '导入',
+  export: '导出',
 };
