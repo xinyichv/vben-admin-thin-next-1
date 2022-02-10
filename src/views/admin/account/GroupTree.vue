@@ -197,12 +197,8 @@
       }
 
       function handleDeleteSuccess(res: any) {
-        if (res.parentGroup && res.parentGroup != '') {
-          onLoadData({
-            eventKey: res.parentGroup,
-          });
-        } else {
-          fetch();
+        if (res.key && res.key != '') {
+          getTree().deleteNodeByKey(res.key);
         }
       }
 

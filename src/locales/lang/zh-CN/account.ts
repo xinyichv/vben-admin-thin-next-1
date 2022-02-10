@@ -33,6 +33,7 @@ export default {
   importDingding: '从钉钉导入',
   interfaceSetting: '接口设置',
   importExcel: '从Excel导入',
+  importUserErr: '导入用户失败',
   downloadTemplate: '下载Excel导入模板',
   dtxls: 'XLS格式',
   dtxlsx: 'XLSX格式',
@@ -41,7 +42,7 @@ export default {
   ipDingdingTitle: '是否确认从钉钉导入账号？',
   ipDingdingContent: '导入后组织账号将与钉钉进行同步，同时移除离职的账号。',
   importSuccessAdd:
-    '导入用户成功！但需要一段时间才会显示在页面中，请稍后手动刷新页面！本次新增用户数：',
+    '导入用户成功！但可能需要一段时间才会显示在页面中，请稍后手动刷新页面！本次新增用户数：',
   importSuccessDel: '，本次删除已离职用户数：',
   groupId: '组ID',
   groupName: '组名称',

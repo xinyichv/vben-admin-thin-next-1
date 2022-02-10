@@ -233,9 +233,9 @@
           );
           isUploadingRef.value = false;
           // 生产环境:抛出错误
-          //const errorList = data.filter((item: any) => !item.success);
-          //if (errorList.length > 0) throw errorList;
-          emit('uploadsuccess', data);
+          const errorList = data.filter((item: any) => !item.success);
+          if (errorList.length > 0) throw errorList;
+          emit('uploadsuccess', fileListRef.value);
         } catch (e) {
           isUploadingRef.value = false;
           throw e;

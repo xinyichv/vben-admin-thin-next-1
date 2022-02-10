@@ -37,6 +37,8 @@
               <a-menu-divider />
               <BasicUploadS
                 :accept="['xls', 'xlsx']"
+                :maxNumber="1"
+                :multiple="false"
                 :api="importUsersByExcel"
                 @uploadsuccess="handleUploadSuccess"
                 renderType="menu"
@@ -147,7 +149,7 @@
     },
     setup() {
       const { t } = useI18n();
-      const { createMessage, createConfirm } = useMessage();
+      const { createMessage, createConfirm, createErrorModal } = useMessage();
       const go = useGo();
       const searchInfo = reactive<Recordable>({});
       const [openFullLoading, closeFullLoading] = useLoading({
@@ -278,9 +280,17 @@
       }
 
       function handleUploadSuccess(res: any) {
-        console.log(res);
-        createMessage.success(t('account.importSuccessAdd'));
-        reload();
+        if (res[0].responseData.data) {
+          createMessage.success(
+            t('account.importSuccessAdd') + res[0].responseData.data.addedUsers,
+          );
+          reload();
+        } else {
+          createErrorModal({
+            title: t('account.importUserErr'),
+            content: res[0].responseData.message,
+          });
+        }
       }
 
       return {

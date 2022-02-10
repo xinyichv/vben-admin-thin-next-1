@@ -47,7 +47,7 @@
   ];
   export default defineComponent({
     components: { BasicModal, BasicForm },
-    emits: ['success'],
+    emits: ['success', 'register'],
     setup(_, { emit }) {
       const { createMessage } = useMessage();
       const parentGroup = ref('');
@@ -83,7 +83,7 @@
               createMessage.success(t('common.delSuccess'));
               closeModal();
               emit('success', {
-                parentGroup: parentGroup.value,
+                key: deleteId.value,
               });
             })
             .finally(() => {
@@ -97,7 +97,7 @@
               createMessage.success(t('common.removeSuccess'));
               closeModal();
               emit('success', {
-                parentGroup: parentGroup.value,
+                key: deleteId.value,
               });
             })
             .finally(() => {
