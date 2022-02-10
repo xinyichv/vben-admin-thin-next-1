@@ -1,7 +1,20 @@
 <template>
   <div>
-    <a-button type="primary" @click="openUploadModal" preIcon="ant-design:upload-outlined">
-      {{ t('component.upload.upload') }}
+    <a-menu-item
+      v-if="$props.renderType == 'menu'"
+      :key="$props.renderMenuKey"
+      @click="openUploadModal"
+    >
+      <slot></slot>
+      {{ $props.renderText }}
+    </a-menu-item>
+    <a-button
+      v-else
+      :type="$props.renderType"
+      @click="openUploadModal"
+      :preIcon="$props.renderIcon"
+    >
+      {{ $props.renderText }}
     </a-button>
 
     <UploadModal
@@ -11,11 +24,13 @@
       @change="handleChange"
       @delete="handleDelete"
       @uploaddone="handleDone"
+      @uploadsuccess="handleSuccess"
     />
   </div>
 </template>
 <script lang="ts">
   import { defineComponent, ref, watch, unref, computed } from 'vue';
+  import { Menu } from 'ant-design-vue';
   import UploadModal from './UploadModal.vue';
   import { useModal } from '/@/components/Modal';
   import { uploadContainerProps } from './props';
@@ -25,9 +40,9 @@
 
   export default defineComponent({
     name: 'BasicUpload',
-    components: { UploadModal },
+    components: { UploadModal, AMenuItem: Menu.Item },
     props: uploadContainerProps,
-    emits: ['change', 'delete', 'preview-delete', 'update:value', 'uploaddone'],
+    emits: ['change', 'delete', 'preview-delete', 'update:value', 'uploaddone', 'uploadsuccess'],
 
     setup(props, { emit, attrs }) {
       const { t } = useI18n();
@@ -70,6 +85,10 @@
         emit('uploaddone');
       }
 
+      function handleSuccess(res: any) {
+        emit('uploadsuccess', res);
+      }
+
       function handlePreviewDelete(url: string) {
         emit('preview-delete', url);
       }
@@ -83,6 +102,7 @@
         bindValue,
         handleDelete,
         handleDone,
+        handleSuccess,
         handlePreviewDelete,
         t,
       };

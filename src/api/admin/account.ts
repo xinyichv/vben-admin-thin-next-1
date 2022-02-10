@@ -1,5 +1,7 @@
 import { defHttp } from '/@/utils/http/axios';
-import { tableModel } from '/@/api/model/baseModel';
+import { downloadByUrl } from '/@/utils/file/download';
+import { getToken } from '/@/utils/auth';
+import { tableModel, UploadResult } from '/@/api/model/baseModel';
 import {
   GetGroupsParams,
   GetGroupsResult,
@@ -15,6 +17,7 @@ import {
 } from './model/account';
 import { TreeItem } from '/@/components/Tree';
 import { GroupsSortByEnum } from '/@/enums/accountEnum';
+import { UploadFileParams } from '/#/axios';
 
 enum Api {
   GET_ROOTGROUPS = '/api/rootgroups',
@@ -26,9 +29,11 @@ enum Api {
   GET_USERINFO = '/api/people',
   DELETE_USER = '/api/people',
   IMPORT_WECHAT = '/idoc/wechat/user/syncuser',
+  IMPORT_DINGDING = '/idoc/dingding/user/syncuser',
   SAVE_ROOTGROUP = '/api/rootgroups',
   SAVE_GROUP = '/api/groups',
   DELETE_GROUP = '/api/groups',
+  DOWNLOAD_TEMPLATE = '/api/people/upload',
 }
 
 export async function getRootGroups(params: GetGroupsParams | null) {
@@ -126,6 +131,13 @@ export function importWechat() {
   });
 }
 
+export function importDingding() {
+  return defHttp.get<ImportResult>({
+    url: Api.IMPORT_DINGDING,
+    timeout: 120000,
+  });
+}
+
 export function createRootGroup(shortGroupId: string, params: UpdateGroupParams) {
   if (shortGroupId.startsWith('GROUP_')) {
     shortGroupId = shortGroupId.substring(6);
@@ -182,4 +194,25 @@ export function deleteGroup(shortGroupId: string) {
   return defHttp.delete<any>({
     url: `${Api.DELETE_GROUP}/${shortGroupId}`,
   });
+}
+
+export function downloadTemplate(fileSufix: string) {
+  const ticket = getToken();
+  downloadByUrl({
+    url: `proxy/alfresco${Api.DOWNLOAD_TEMPLATE}?format=${fileSufix}&alf_ticket=${ticket}`,
+    target: '_self',
+  });
+}
+
+export function importUsersByExcel(
+  params: UploadFileParams,
+  onUploadProgress: (progressEvent: ProgressEvent) => void,
+) {
+  return defHttp.uploadFile<UploadResult>(
+    {
+      url: `proxy/alfresco/api/people/upload.json`,
+      onUploadProgress,
+    },
+    params,
+  );
 }

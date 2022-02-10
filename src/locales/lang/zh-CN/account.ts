@@ -38,9 +38,11 @@ export default {
   dtxlsx: 'XLSX格式',
   ipWechatTitle: '是否确认从微信导入账号？',
   ipWechatContent: '导入后组织账号将与微信进行同步，同时移除离职的账号。',
+  ipDingdingTitle: '是否确认从钉钉导入账号？',
+  ipDingdingContent: '导入后组织账号将与钉钉进行同步，同时移除离职的账号。',
   importSuccessAdd:
-    '导入用户成功！但需要一段时间才会显示在页面中，请稍后手动刷新页面！<br>本次新增用户数：',
-  importSuccessDel: '<br>本次删除已离职用户数：',
+    '导入用户成功！但需要一段时间才会显示在页面中，请稍后手动刷新页面！本次新增用户数：',
+  importSuccessDel: '，本次删除已离职用户数：',
   groupId: '组ID',
   groupName: '组名称',
   parentGroup: '父组',

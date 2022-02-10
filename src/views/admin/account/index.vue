@@ -27,19 +27,31 @@
                 <WechatOutlined />
                 {{ t('account.importWechat') }}
               </a-menu-item>
-              <a-menu-item key="2">
+              <a-menu-item key="2" @click="handleIpDingding">
                 <DingdingOutlined />
                 {{ t('account.importDingding') }}
               </a-menu-item>
-              <a-menu-item key="3">{{ t('account.interfaceSetting') }}</a-menu-item>
-              <a-menu-divider />
-              <a-menu-item key="4">
-                <FileExcelOutlined />
-                {{ t('account.importExcel') }}
+              <a-menu-item key="3" @click="handleGotoIs">
+                {{ t('account.interfaceSetting') }}
               </a-menu-item>
+              <a-menu-divider />
+              <BasicUploadS
+                :accept="['xls', 'xlsx']"
+                :api="importUsersByExcel"
+                @uploadsuccess="handleUploadSuccess"
+                renderType="menu"
+                renderMenuKey="4"
+                :renderText="t('account.importExcel')"
+              >
+                <FileExcelOutlined />
+              </BasicUploadS>
               <a-sub-menu key="5" :title="t('account.downloadTemplate')">
-                <a-menu-item key="5_1">{{ t('account.dtxls') }}</a-menu-item>
-                <a-menu-item key="5_2">{{ t('account.dtxlsx') }}</a-menu-item>
+                <a-menu-item key="5_1" @click="handleDownloadXls">
+                  {{ t('account.dtxls') }}
+                </a-menu-item>
+                <a-menu-item key="5_2" @click="handleDownloadXlsx">
+                  {{ t('account.dtxlsx') }}
+                </a-menu-item>
               </a-sub-menu>
             </a-menu>
           </template>
@@ -91,7 +103,14 @@
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { deleteUser, getUserByPage, importWechat } from '/@/api/admin/account';
+  import {
+    deleteUser,
+    getUserByPage,
+    importWechat,
+    importDingding,
+    downloadTemplate,
+    importUsersByExcel,
+  } from '/@/api/admin/account';
   import { ImportResult } from '/@/api/admin/model/account';
   import { PageWrapper } from '/@/components/Page';
   import GroupTree from './GroupTree.vue';
@@ -103,6 +122,7 @@
   import { columns, searchFormSchema } from './data';
   import { useGo } from '/@/hooks/web/usePage';
   import { useLoading } from '/@/components/Loading';
+  import { BasicUploadS } from '/@/components/UploadS';
 
   export default defineComponent({
     name: 'AccountManagement',
@@ -123,6 +143,7 @@
       TableAction,
       UserDrawer,
       UserEditDrawer,
+      BasicUploadS,
     },
     setup() {
       const { t } = useI18n();
@@ -221,6 +242,47 @@
         });
       }
 
+      function handleIpDingding() {
+        createConfirm({
+          iconType: 'warning',
+          title: t('account.ipDingdingTitle'),
+          content: t('account.ipDingdingContent'),
+          onOk() {
+            openFullLoading();
+            importDingding()
+              .then((res: ImportResult) => {
+                if (res.result == 'success') {
+                  let msg = t('account.importSuccessAdd') + res.add + '。';
+                  createMessage.success(msg);
+                } else {
+                  createMessage.error(res.msg);
+                }
+              })
+              .finally(() => {
+                closeFullLoading();
+              });
+          },
+        });
+      }
+
+      function handleGotoIs() {
+        go('/admin/thirdparty');
+      }
+
+      function handleDownloadXls() {
+        downloadTemplate('xls');
+      }
+
+      function handleDownloadXlsx() {
+        downloadTemplate('xlsx');
+      }
+
+      function handleUploadSuccess(res: any) {
+        console.log(res);
+        createMessage.success(t('account.importSuccessAdd'));
+        reload();
+      }
+
       return {
         t,
         registerTable,
@@ -234,6 +296,12 @@
         handleSelect,
         searchInfo,
         handleIpWechat,
+        handleIpDingding,
+        handleGotoIs,
+        handleDownloadXls,
+        handleDownloadXlsx,
+        importUsersByExcel,
+        handleUploadSuccess,
       };
     },
   });

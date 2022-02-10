@@ -70,7 +70,7 @@
         default: () => [],
       },
     },
-    emits: ['change', 'register', 'delete', 'uploaddone'],
+    emits: ['change', 'register', 'delete', 'uploaddone', 'uploadsuccess'],
     setup(props, { emit }) {
       const state = reactive<{ fileList: FileItem[] }>({
         fileList: [],
@@ -233,8 +233,9 @@
           );
           isUploadingRef.value = false;
           // 生产环境:抛出错误
-          const errorList = data.filter((item: any) => !item.success);
-          if (errorList.length > 0) throw errorList;
+          //const errorList = data.filter((item: any) => !item.success);
+          //if (errorList.length > 0) throw errorList;
+          emit('uploadsuccess', data);
         } catch (e) {
           isUploadingRef.value = false;
           throw e;
