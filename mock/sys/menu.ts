@@ -423,14 +423,6 @@ const systemRoute = {
       },
     },
     {
-      path: 'organize',
-      name: 'Organize',
-      component: '/admin/organize/index.vue',
-      meta: {
-        title: 'routes.admin.organize',
-      },
-    },
-    {
       path: 'site',
       name: 'Site',
       component: '/admin/site/index.vue',

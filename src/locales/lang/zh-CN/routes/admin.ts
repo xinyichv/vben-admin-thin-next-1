@@ -12,7 +12,7 @@ export default {
   },
   datadic: '数据字典',
   navigate: '导航菜单',
-  category: '分类菜单',
+  category: '分类管理',
   tag: '标签管理',
   folderrule: '文件夹规则',
   dataModel: '数据模型',

@@ -43,14 +43,6 @@ const admin: AppRouteModule = {
       component: () => import('/@/views/admin/account/AccountDetail.vue'),
     },
     {
-      path: 'organize',
-      name: 'Organize',
-      component: () => import('/@/views/admin/organize/index.vue'),
-      meta: {
-        title: t('routes.admin.organize'),
-      },
-    },
-    {
       path: 'site',
       name: 'Site',
       component: () => import('/@/views/admin/site/index.vue'),
