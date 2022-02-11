@@ -14,7 +14,7 @@ import {
   GetUserInfoResult,
   ImportResult,
   UpdateGroupParams,
-} from './model/account';
+} from './model/accountModel';
 import { TreeItem } from '/@/components/Tree';
 import { GroupsSortByEnum } from '/@/enums/accountEnum';
 import { UploadFileParams } from '/#/axios';

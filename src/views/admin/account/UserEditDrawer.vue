@@ -21,7 +21,7 @@
   import { userEditFormSchema } from './data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { getUserInfo, updateUser, changePassword } from '/@/api/admin/account';
-  import { ChangePasswordParams, GetUserInfoResult } from '/@/api/admin/model/account';
+  import { ChangePasswordParams, GetUserInfoResult } from '../../../api/admin/model/accountModel';
   import { useLoading } from '/@/components/Loading';
   import { difference } from 'lodash-es';
 

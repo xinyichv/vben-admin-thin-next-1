@@ -113,7 +113,7 @@
     downloadTemplate,
     importUsersByExcel,
   } from '/@/api/admin/account';
-  import { ImportResult } from '/@/api/admin/model/account';
+  import { ImportResult } from '../../../api/admin/model/accountModel';
   import { PageWrapper } from '/@/components/Page';
   import GroupTree from './GroupTree.vue';
 
