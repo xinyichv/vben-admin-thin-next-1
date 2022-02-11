@@ -10,10 +10,7 @@
       <div :class="`${prefixCls}__header`">
         <!-- modified by leencloud -->
         <!-- <img :src="avatar" :class="`${prefixCls}__header-img`" /> -->
-        <img
-          :src="`proxy/alfresco/${avatar}&alf_ticket=${token}`"
-          :class="`${prefixCls}__header-img`"
-        />
+        <img :src="`${avatar}&alf_ticket=${token}`" :class="`${prefixCls}__header-img`" />
         <p :class="`${prefixCls}__header-name`">
           {{ getRealName }}
         </p>
@@ -40,6 +37,7 @@
   import { useUserStore } from '/@/store/modules/user';
   import { useLockStore } from '/@/store/modules/lock';
   import headerImg from '/@/assets/images/header.jpg';
+
   export default defineComponent({
     name: 'LockModal',
     components: { BasicModal, BasicForm },

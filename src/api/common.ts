@@ -40,9 +40,9 @@ export async function saveNode(params: SaveNodeParams) {
 export function download(params: DownloadParams) {
   const ticket = getToken();
   downloadByUrl({
-    url: `proxy/alfresco/slingshot/node/content/workspace/SpacesStore/${
-      params.key
-    }/${encodeURIComponent(params.name)}?a=true&alf_ticket=${ticket}`,
+    url: `/slingshot/node/content/workspace/SpacesStore/${params.key}/${encodeURIComponent(
+      params.name,
+    )}?a=true&alf_ticket=${ticket}`,
     target: '_self',
   });
 }
@@ -60,7 +60,7 @@ export function upload(
   const destination = params.data ? params.data.destination : '';
   return defHttp.uploadFile<UploadResult>(
     {
-      url: `proxy/alfresco/idoc/common/node/upload/workspace://SpacesStore/${destination}`,
+      url: `/idoc/common/node/upload/workspace://SpacesStore/${destination}`,
       onUploadProgress,
     },
     params,

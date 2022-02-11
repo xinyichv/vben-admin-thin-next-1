@@ -16,6 +16,9 @@ import { RouteRecordRaw } from 'vue-router';
 import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 import { isArray } from '/@/utils/is';
 import { h } from 'vue';
+import { useGlobSetting } from '/@/hooks/setting';
+
+const { apiUrl = '' } = useGlobSetting();
 
 interface UserState {
   userInfo: Nullable<UserInfo>;
@@ -42,9 +45,6 @@ export const useUserStore = defineStore({
   getters: {
     getUserInfo(): UserInfo {
       return this.userInfo || getAuthCache<UserInfo>(USER_INFO_KEY) || {};
-    },
-    getUserAvatar(): string {
-      return `proxy/alfresco/${this.userInfo?.avatar}&alf_ticket=${this.token}`;
     },
     getToken(): string {
       return this.token || getAuthCache<string>(TOKEN_KEY);
@@ -94,7 +94,6 @@ export const useUserStore = defineStore({
       try {
         const { goHome = true, mode, ...loginParams } = params;
         const data = await loginApi(loginParams, mode);
-        console.log(data);
         const { ticket } = data.data;
 
         // save token
@@ -107,7 +106,7 @@ export const useUserStore = defineStore({
     async afterLoginAction(goHome?: boolean): Promise<GetUserInfoModel | null> {
       if (!this.getToken) return null;
       // get user info
-      const userInfo = await this.getUserInfoAction();
+      const userInfo = this.getUserInfo || (await this.getUserInfoAction());
 
       const sessionTimeout = this.sessionTimeout;
       if (sessionTimeout) {
@@ -129,6 +128,9 @@ export const useUserStore = defineStore({
     async getUserInfoAction(): Promise<UserInfo | null> {
       if (!this.getToken) return null;
       const userInfo = await getUserInfo();
+
+      // add by leencloud
+      userInfo.avatar = apiUrl + '/' + userInfo.avatar;
 
       const { roles = [] } = userInfo;
       if (isArray(roles)) {

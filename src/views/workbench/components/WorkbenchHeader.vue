@@ -34,5 +34,5 @@
 
   const userStore = useUserStore();
   const userinfo = computed(() => userStore.getUserInfo);
-  const avatar = computed(() => userStore.getUserAvatar);
+  const avatar = computed(() => userinfo.value.avatar);
 </script>

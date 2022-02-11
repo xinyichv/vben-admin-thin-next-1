@@ -1,5 +1,8 @@
 import { openWindow } from '..';
 import { dataURLtoBlob, urlToBase64 } from './base64Conver';
+import { useGlobSetting } from '/@/hooks/setting';
+
+const { apiUrl = '' } = useGlobSetting();
 
 /**
  * Download online pictures
@@ -66,6 +69,9 @@ export function downloadByUrl({
 }): boolean {
   const isChrome = window.navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
   const isSafari = window.navigator.userAgent.toLowerCase().indexOf('safari') > -1;
+
+  // add by leencloud
+  url = apiUrl + url;
 
   if (/(iP)/g.test(window.navigator.userAgent)) {
     console.error('Your browser does not support download!');

@@ -3,10 +3,7 @@
     <span :class="[prefixCls, `${prefixCls}--${theme}`]" class="flex">
       <!-- modified by leencloud -->
       <!-- <img :class="`${prefixCls}__header`" :src="getUserInfo.avatar" /> -->
-      <img
-        :class="`${prefixCls}__header`"
-        :src="`proxy/alfresco/${getUserInfo.avatar}&alf_ticket=${token}`"
-      />
+      <img :class="`${prefixCls}__header`" :src="`${getUserInfo.avatar}&alf_ticket=${token}`" />
       <span :class="`${prefixCls}__info hidden md:block`">
         <span :class="`${prefixCls}__name  `" class="truncate">
           {{ getUserInfo.name }}

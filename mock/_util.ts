@@ -56,5 +56,5 @@ export interface requestParams {
  *
  */
 export function getRequestToken({ headers, query }: requestParams): string | undefined {
-  return headers?.authorization || query.alf_ticket;
+  return query.alf_ticket || headers?.authorization;
 }

@@ -34,6 +34,7 @@ enum Api {
   SAVE_GROUP = '/api/groups',
   DELETE_GROUP = '/api/groups',
   DOWNLOAD_TEMPLATE = '/api/people/upload',
+  UPLOAD_TEMPLATE = '/api/people/upload.json',
 }
 
 export async function getRootGroups(params: GetGroupsParams | null) {
@@ -199,7 +200,7 @@ export function deleteGroup(shortGroupId: string) {
 export function downloadTemplate(fileSufix: string) {
   const ticket = getToken();
   downloadByUrl({
-    url: `proxy/alfresco${Api.DOWNLOAD_TEMPLATE}?format=${fileSufix}&alf_ticket=${ticket}`,
+    url: `${Api.DOWNLOAD_TEMPLATE}?format=${fileSufix}&alf_ticket=${ticket}`,
     target: '_self',
   });
 }
@@ -210,7 +211,7 @@ export function importUsersByExcel(
 ) {
   return defHttp.uploadFile<UploadResult>(
     {
-      url: `proxy/alfresco/api/people/upload.json`,
+      url: Api.UPLOAD_TEMPLATE,
       onUploadProgress,
     },
     params,

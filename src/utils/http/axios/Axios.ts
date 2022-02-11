@@ -10,6 +10,9 @@ import { ContentTypeEnum } from '/@/enums/httpEnum';
 import { RequestEnum } from '/@/enums/httpEnum';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
+import { useGlobSetting } from '/@/hooks/setting';
+
+const { apiUrl = '' } = useGlobSetting();
 
 export * from './axiosTransform';
 
@@ -145,6 +148,9 @@ export class VAxios {
         formData.append(key, params.data![key]);
       });
     }
+
+    // add by leencloud
+    config.url = apiUrl + config.url;
 
     return this.axiosInstance.request<T>({
       ...config,
