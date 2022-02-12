@@ -1,5 +1,5 @@
 <template>
-  <CollapseContainer :title="t('thirdparty.wechat')" :canExpan="false">
+  <CollapseContainer :title="t('setting.baseSetting')" :canExpan="false">
     <a-row :gutter="24">
       <a-col :span="24">
         <BasicForm @register="register" />
@@ -18,7 +18,7 @@
   import { useMessage } from '/@/hooks/web/useMessage';
 
   import { getSysSetting, saveSysSetting } from '/@/api/admin/thirdparty';
-  import { wechatSetschemas } from '../data';
+  import { baseSettingForm } from '../data';
 
   export default defineComponent({
     components: {
@@ -34,16 +34,16 @@
 
       const [register, { setFieldsValue, getFieldsValue }] = useForm({
         labelWidth: 200,
-        schemas: wechatSetschemas,
+        schemas: baseSettingForm,
         showActionButtonGroup: false,
       });
 
       onMounted(async () => {
         let params = {};
-        for (let i in wechatSetschemas) {
-          let itemObj = wechatSetschemas[i];
-          if (itemObj.itemProps && itemObj.itemProps.name) {
-            params[itemObj.itemProps.name as string] = '';
+        for (let i in baseSettingForm) {
+          let itemObj = baseSettingForm[i];
+          if (itemObj.component != 'Divider') {
+            params[itemObj.field as string] = itemObj.defaultValue ? itemObj.defaultValue : '';
           }
         }
         const data = await getSysSetting(params);

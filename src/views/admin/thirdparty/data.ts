@@ -9,12 +9,12 @@ const { t } = useI18n();
 export const settingList = [
   {
     key: '1',
-    name: t('system.wechat'),
+    name: t('thirdparty.wechat'),
     component: 'Wechat',
   },
   {
     key: '2',
-    name: t('system.dingding'),
+    name: t('thirdparty.dingding'),
     component: 'Dingding',
   },
 ];
@@ -24,14 +24,13 @@ export const wechatSetschemas: FormSchema[] = [
   {
     field: 'compinfo',
     component: 'Divider',
-    label: t('system.thirdparty.compinfo'),
+    label: t('thirdparty.compinfo'),
   },
   {
     field: 'idoc_wechat_corpid',
     component: 'Input',
-    label: t('system.thirdparty.corpid'),
+    label: t('thirdparty.corpid'),
     colProps: { span: 18 },
-    labelWidth: 200,
     itemProps: {
       name: 'idoc_wechat_corpid',
     },
@@ -39,14 +38,13 @@ export const wechatSetschemas: FormSchema[] = [
   {
     field: 'addressbook',
     component: 'Divider',
-    label: t('system.thirdparty.addressbook'),
+    label: t('thirdparty.addressbook'),
   },
   {
     field: 'idoc_wechat_contact_secret',
     component: 'Input',
-    label: t('system.thirdparty.corpsecret'),
+    label: t('thirdparty.corpsecret'),
     colProps: { span: 18 },
-    labelWidth: 200,
     itemProps: {
       name: 'idoc_wechat_contact_secret',
     },
@@ -54,14 +52,13 @@ export const wechatSetschemas: FormSchema[] = [
   {
     field: 'idoc',
     component: 'Divider',
-    label: t('system.thirdparty.idoc'),
+    label: t('thirdparty.idoc'),
   },
   {
     field: 'idoc_wechat_app_agentid',
     component: 'Input',
     label: 'AgentId',
     colProps: { span: 18 },
-    labelWidth: 200,
     itemProps: {
       name: 'idoc_wechat_app_agentid',
     },
@@ -69,9 +66,8 @@ export const wechatSetschemas: FormSchema[] = [
   {
     field: 'idoc_wechat_app_secret',
     component: 'Input',
-    label: t('system.thirdparty.corpsecret'),
+    label: t('thirdparty.corpsecret'),
     colProps: { span: 18 },
-    labelWidth: 200,
     itemProps: {
       name: 'idoc_wechat_app_secret',
     },
@@ -79,17 +75,15 @@ export const wechatSetschemas: FormSchema[] = [
   {
     field: 'mhomepage',
     component: 'Divider',
-    label: t('system.thirdparty.mhomepage'),
+    label: t('thirdparty.mhomepage'),
   },
   {
     field: 'mhomepage_home',
     component: 'Input',
-    label: t('system.thirdparty.mhomepagehome'),
+    label: t('thirdparty.mhomepagehome'),
     colProps: { span: 18 },
-    labelWidth: 200,
-    helpMessage: t('system.thirdparty.mhomepagehomehelp'),
+    helpMessage: t('thirdparty.mhomepagehomehelp'),
     render: ({ model }) => {
-      console.log(model);
       const baseUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize';
       const appid = model['idoc_wechat_corpid'];
       const redirect_uri = encodeURIComponent(
@@ -110,19 +104,18 @@ export const wechatSetschemas: FormSchema[] = [
   },
 ];
 
-// 微信设置 form
+// 钉钉设置 form
 export const dingdingSetschemas: FormSchema[] = [
   {
     field: 'appsecret',
     component: 'Divider',
-    label: t('system.thirdparty.appsecret'),
+    label: t('thirdparty.appsecret'),
   },
   {
     field: 'idoc_dingding_agentid',
     component: 'Input',
     label: 'AgentId',
     colProps: { span: 18 },
-    labelWidth: 200,
     itemProps: {
       name: 'idoc_dingding_agentid',
     },
@@ -132,7 +125,6 @@ export const dingdingSetschemas: FormSchema[] = [
     component: 'Input',
     label: 'AppKey',
     colProps: { span: 18 },
-    labelWidth: 200,
     itemProps: {
       name: 'idoc_dingding_appkey',
     },
@@ -142,7 +134,6 @@ export const dingdingSetschemas: FormSchema[] = [
     component: 'Input',
     label: 'AppSecret',
     colProps: { span: 18 },
-    labelWidth: 200,
     itemProps: {
       name: 'idoc_dingding_appsecret',
     },

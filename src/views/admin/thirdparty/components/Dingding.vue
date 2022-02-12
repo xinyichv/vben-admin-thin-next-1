@@ -1,5 +1,5 @@
 <template>
-  <CollapseContainer :title="t('system.dingding')" :canExpan="false">
+  <CollapseContainer :title="t('thirdparty.dingding')" :canExpan="false">
     <a-row :gutter="24">
       <a-col :span="24">
         <BasicForm @register="register" />
@@ -33,7 +33,7 @@
       const { createMessage } = useMessage();
 
       const [register, { setFieldsValue, getFieldsValue }] = useForm({
-        labelWidth: 120,
+        labelWidth: 200,
         schemas: dingdingSetschemas,
         showActionButtonGroup: false,
       });
