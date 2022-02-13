@@ -1,7 +1,7 @@
 import { defHttp } from '/@/utils/http/axios';
 import {
   GetKeyParams,
-  BasicResult,
+  KeyResult,
   SaveNodeParams,
   DownloadParams,
   UploadResult,
@@ -24,14 +24,14 @@ export async function getMaster(params: any) {
 }
 
 export async function getKeyWithPath(params: GetKeyParams) {
-  return defHttp.get<BasicResult>({
+  return defHttp.get<KeyResult>({
     url: Api.GET_KEY_WITHPATH,
     params,
   });
 }
 
 export async function saveNode(params: SaveNodeParams) {
-  return defHttp.post<BasicResult>({
+  return defHttp.post<KeyResult>({
     url: Api.SAVE_NODE,
     params,
   });

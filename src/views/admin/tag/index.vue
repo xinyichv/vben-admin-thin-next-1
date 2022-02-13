@@ -1,33 +1,111 @@
 <template>
-  <PageWrapper :title="t(currentRoute.meta.title)">
-    <template #headerContent>
-      <div class="flex justify-between items-center">
-        <span class="flex-1">开发中。</span>
-      </div>
-    </template>
-  </PageWrapper>
+  <div>
+    <BasicTable @register="registerTable">
+      <template #action="{ record }">
+        <TableAction
+          :actions="[
+            {
+              icon: 'ant-design:edit-outlined',
+              tooltip: t('common.edit'),
+              onClick: handleEdit.bind(null, record),
+            },
+            {
+              icon: 'ant-design:delete-outlined',
+              color: 'error',
+              tooltip: t('common.delete'),
+              popConfirm: {
+                title: t('common.delConfirm'),
+                confirm: handleDelete.bind(null, record),
+              },
+            },
+          ]"
+        />
+      </template>
+    </BasicTable>
+    <TagModal @register="registerModal" @success="handleSuccess" />
+  </div>
 </template>
-<script lang="ts" setup>
-  import { PageWrapper } from '/@/components/Page';
-  import { DescItem } from '/@/components/Description/index';
-  import { useRouter } from 'vue-router';
+<script lang="ts">
+  import { defineComponent } from 'vue';
+
+  import { useModal } from '/@/components/Modal';
+  import { useLoading } from '/@/components/Loading';
+  import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { useI18n } from '/@/hooks/web/useI18n';
+  import { useMessage } from '/@/hooks/web/useMessage';
 
-  const { t } = useI18n();
-  const { currentRoute } = useRouter();
+  import TagModal from './TagModal.vue';
 
-  const { pkg } = __APP_INFO__;
+  import { getTagByPage, deleteTag } from '/@/api/admin/tag';
+  import { columns, searchFormSchema } from './data';
 
-  const { dependencies, devDependencies } = pkg;
+  export default defineComponent({
+    name: 'SiteManagement',
+    components: { BasicTable, TableAction, TagModal },
+    setup() {
+      const { t } = useI18n();
+      const { createMessage } = useMessage();
+      const [registerModal, { openModal }] = useModal();
+      const [openFullLoading, closeFullLoading] = useLoading({
+        tip: t('common.actioningText'),
+      });
+      const [registerTable, { reload }] = useTable({
+        title: t('tag.tagList'),
+        titleHelpMessage: t('tag.tagListHelp'),
+        api: getTagByPage,
+        columns,
+        formConfig: {
+          labelWidth: 120,
+          schemas: searchFormSchema,
+          autoSubmitOnEnter: true,
+        },
+        useSearchForm: true,
+        showTableSetting: true,
+        bordered: true,
+        showIndexColumn: false,
+        actionColumn: {
+          width: 40,
+          title: t('common.action'),
+          dataIndex: 'action',
+          slots: { customRender: 'action' },
+        },
+      });
 
-  const schema: DescItem[] = [];
-  const devSchema: DescItem[] = [];
+      function handleEdit(record: Recordable) {
+        openModal(true, {
+          key: record.name,
+        });
+      }
 
-  Object.keys(dependencies).forEach((key) => {
-    schema.push({ field: key, label: key });
-  });
+      async function handleDelete(record: Recordable) {
+        console.log(record);
+        openFullLoading();
+        deleteTag(record.name)
+          .then((res) => {
+            if (res.result == true) {
+              createMessage.success(t('common.delSuccess'));
+              reload();
+            } else {
+              createMessage.error(res.msg ? res.msg : t('common.actionFail'));
+            }
+          })
+          .finally(() => {
+            closeFullLoading();
+          });
+      }
 
-  Object.keys(devDependencies).forEach((key) => {
-    devSchema.push({ field: key, label: key });
+      function handleSuccess() {
+        reload();
+      }
+
+      return {
+        t,
+        registerTable,
+        handleEdit,
+        handleDelete,
+        handleSuccess,
+        registerModal,
+      };
+    },
   });
 </script>

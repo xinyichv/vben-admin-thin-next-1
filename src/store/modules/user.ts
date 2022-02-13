@@ -106,7 +106,7 @@ export const useUserStore = defineStore({
     async afterLoginAction(goHome?: boolean): Promise<GetUserInfoModel | null> {
       if (!this.getToken) return null;
       // get user info
-      const userInfo = this.getUserInfo || (await this.getUserInfoAction());
+      const userInfo = await this.getUserInfoAction();
 
       const sessionTimeout = this.sessionTimeout;
       if (sessionTimeout) {
@@ -123,6 +123,7 @@ export const useUserStore = defineStore({
         }
         goHome && (await router.replace(userInfo?.homePath || PageEnum.BASE_HOME));
       }
+      console.log('afterLoginAction userInfo', userInfo);
       return userInfo;
     },
     async getUserInfoAction(): Promise<UserInfo | null> {

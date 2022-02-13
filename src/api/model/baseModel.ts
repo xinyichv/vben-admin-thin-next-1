@@ -1,4 +1,9 @@
 export interface BasicResult {
+  result: boolean;
+  msg?: string;
+}
+
+export interface KeyResult {
   key: string;
 }
 
@@ -51,4 +56,8 @@ export interface DownloadParams {
 export interface UploadResult {
   key: string;
   fileName: string;
+}
+
+export interface RenameParams {
+  name: string;
 }
