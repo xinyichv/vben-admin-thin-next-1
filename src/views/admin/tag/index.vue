@@ -51,7 +51,6 @@
       });
       const [registerTable, { reload }] = useTable({
         title: t('tag.tagList'),
-        titleHelpMessage: t('tag.tagListHelp'),
         api: getTagByPage,
         columns,
         formConfig: {
