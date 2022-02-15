@@ -93,9 +93,13 @@
         });
       }
     } catch (error: any) {
+      let errMsg = t('sys.api.networkExceptionMsg');
+      if (error.message && error.message == 'loginFail') {
+        errMsg = t('sys.login.loginFailDesc');
+      }
       createErrorModal({
-        title: t('sys.api.errorTip'),
-        content: (error as unknown as Error).message || t('sys.api.networkExceptionMsg'),
+        title: t('sys.login.loginFailTitle'),
+        content: errMsg,
         getContainer: () => document.body.querySelector(`.${prefixCls}`) || document.body,
       });
     } finally {

@@ -94,6 +94,15 @@ export const useUserStore = defineStore({
       try {
         const { goHome = true, mode, ...loginParams } = params;
         const data = await loginApi(loginParams, mode);
+
+        // add by leencloud for password error
+        if (!data.data) {
+          return Promise.reject({
+            name: 'error',
+            message: 'loginFail',
+          });
+        }
+
         const { ticket } = data.data;
 
         // save token
@@ -123,7 +132,6 @@ export const useUserStore = defineStore({
         }
         goHome && (await router.replace(userInfo?.homePath || PageEnum.BASE_HOME));
       }
-      console.log('afterLoginAction userInfo', userInfo);
       return userInfo;
     },
     async getUserInfoAction(): Promise<UserInfo | null> {

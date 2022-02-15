@@ -89,6 +89,8 @@ export default {
     // notify
     loginSuccessTitle: '登录成功',
     loginSuccessDesc: '欢迎回来',
+    loginFailTitle: '登录失败',
+    loginFailDesc: '账号或密码不正确，请确认！',
 
     // placeholder
     accountPlaceholder: '请输入账号',

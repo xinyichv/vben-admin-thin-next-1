@@ -22,6 +22,10 @@ export interface LoginResultModel {
   data: {
     ticket: string;
   };
+  code: number;
+  message: string;
+  result: Nullable<boolean>;
+  type: string;
 }
 
 /**
