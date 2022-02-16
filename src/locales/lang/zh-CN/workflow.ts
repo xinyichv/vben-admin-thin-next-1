@@ -1,0 +1,15 @@
+export default {
+  create: '创建流程',
+  list: '流程列表',
+  fileOrWfName: '文件名或流程名',
+  fileName: '文件名',
+  wfName: '流程名',
+  status: '激活状态',
+  status1: '已激活',
+  status2: '未激活',
+  wfId: '流程ID',
+  actived: '流程已激活！',
+  unactived: '流程已停用！',
+  activeFail: '流程激活失败，流程ID可能重复或流程定义可能存在问题！',
+  unactiveFail: '流程停用失败，流程可能已在使用中！',
+};

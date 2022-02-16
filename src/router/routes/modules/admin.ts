@@ -7,7 +7,7 @@ const admin: AppRouteModule = {
   path: '/admin',
   name: 'Admin',
   component: LAYOUT,
-  redirect: '/admin/syssetting',
+  redirect: '/admin/setting',
   meta: {
     orderNo: 800,
     icon: 'ant-design:setting-filled',
@@ -15,9 +15,9 @@ const admin: AppRouteModule = {
   },
   children: [
     {
-      path: 'syssetting',
-      name: 'SysSetting',
-      component: () => import('/@/views/admin/syssetting/index.vue'),
+      path: 'setting',
+      name: 'Setting',
+      component: () => import('/@/views/admin/setting/index.vue'),
       meta: {
         title: t('routes.admin.setting'),
       },

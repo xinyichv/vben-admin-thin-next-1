@@ -55,7 +55,6 @@
       });
       const [registerTable, { reload }] = useTable({
         title: t('site.siteList'),
-        titleHelpMessage: t('site.siteListHelp'),
         api: getSiteByPage,
         columns,
         formConfig: {

@@ -172,9 +172,15 @@
       }
 
       async function handleDelete(record: Recordable) {
-        await deleteNode(record.key);
-        createMessage.success(t('common.delSuccess'));
-        reload();
+        openWrapLoading();
+        deleteNode(record.key)
+          .then(() => {
+            createMessage.success(t('common.delSuccess'));
+            reload();
+          })
+          .finally(() => {
+            closeWrapLoading();
+          });
       }
 
       function handleSuccess() {
@@ -194,9 +200,13 @@
           cm_content: data.value,
         };
         openWrapLoading();
-        await saveNode(values);
-        createMessage.success(t('common.saveSuccess'));
-        closeWrapLoading();
+        saveNode(values)
+          .then(() => {
+            createMessage.success(t('common.saveSuccess'));
+          })
+          .finally(() => {
+            closeWrapLoading();
+          });
       }
 
       async function handleActive(checked: boolean) {
@@ -207,9 +217,13 @@
           },
         };
         openWrapLoading();
-        await saveNode(values);
-        createMessage.success(t('datamodel.activeSuccess'));
-        closeWrapLoading();
+        saveNode(values)
+          .then(() => {
+            createMessage.success(t('datamodel.activeSuccess'));
+          })
+          .finally(() => {
+            closeWrapLoading();
+          });
       }
 
       return {

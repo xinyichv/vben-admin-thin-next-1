@@ -14,23 +14,26 @@ enum Api {
   GET_MASTER = '/idoc/pages/database/getmaster',
   GET_KEY_WITHPATH = '/idoc/common/system/getkeywithpath',
   SAVE_NODE = '/idoc/common/node/savenode',
+  DELETE_NODE = '/slingshot/doclib/action/file/node/workspace/SpacesStore',
+  DOWNLOAD_NODE = '/slingshot/node/content/workspace/SpacesStore',
+  UPLOAD_NODE = '/idoc/common/node/upload/workspace://SpacesStore',
 }
 
-export async function getMaster(params: any) {
+export function getMaster(params: any) {
   return defHttp.get<any>({
     url: Api.GET_MASTER,
     params,
   });
 }
 
-export async function getKeyWithPath(params: GetKeyParams) {
+export function getKeyWithPath(params: GetKeyParams) {
   return defHttp.get<KeyResult>({
     url: Api.GET_KEY_WITHPATH,
     params,
   });
 }
 
-export async function saveNode(params: SaveNodeParams) {
+export function saveNode(params: SaveNodeParams) {
   return defHttp.post<KeyResult>({
     url: Api.SAVE_NODE,
     params,
@@ -39,17 +42,24 @@ export async function saveNode(params: SaveNodeParams) {
 
 export function download(params: DownloadParams) {
   const ticket = getToken();
+  let key = params.key;
+  if (key.startsWith('workspace')) {
+    key = key.replace(/workspace.*/, '');
+  }
   downloadByUrl({
-    url: `/slingshot/node/content/workspace/SpacesStore/${params.key}/${encodeURIComponent(
+    url: `${Api.DOWNLOAD_NODE}/${key}/${encodeURIComponent(
       params.name,
     )}?a=true&alf_ticket=${ticket}`,
     target: '_self',
   });
 }
 
-export async function deleteNode(key: String) {
+export function deleteNode(key: String) {
+  if (key.startsWith('workspace')) {
+    key = key.replace(/workspace.*/, '');
+  }
   return defHttp.delete<any>({
-    url: `/slingshot/doclib/action/file/node/workspace/SpacesStore/${key}`,
+    url: `${Api.DELETE_NODE}/${key}`,
   });
 }
 
@@ -57,10 +67,13 @@ export function upload(
   params: UploadFileParams,
   onUploadProgress: (progressEvent: ProgressEvent) => void,
 ) {
-  const destination = params.data ? params.data.destination : '';
+  let destination = params.data ? params.data.destination : '';
+  if (destination.startsWith('workspace')) {
+    destination = destination.replace(/workspace.*/, '');
+  }
   return defHttp.uploadFile<UploadResult>(
     {
-      url: `/idoc/common/node/upload/workspace://SpacesStore/${destination}`,
+      url: `${Api.UPLOAD_NODE}/${destination}`,
       onUploadProgress,
     },
     params,

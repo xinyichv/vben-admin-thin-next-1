@@ -2,7 +2,6 @@ export default {
   create: '创建站点',
   edit: '编辑站点',
   siteList: '站点列表',
-  siteListHelp: '站点管理',
   name: '站点名称',
   enname: '英文名',
   siteType: '站点类型',

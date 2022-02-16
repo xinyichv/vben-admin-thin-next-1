@@ -63,19 +63,20 @@
       const getTitle = computed(() => (key.value == '' ? t('common.create') : t('common.rename')));
 
       async function handleSubmit() {
-        try {
-          const values = await validate();
-          values.destination = destination.value;
-          values.key = key.value;
-          values.cm_name = values.cm_name + '.xml';
-          setModalProps({ confirmLoading: true });
-          await saveNode(values);
-          createMessage.success(t('common.saveSuccess'));
-          closeModal();
-          emit('success');
-        } finally {
-          setModalProps({ confirmLoading: false });
-        }
+        const values = await validate();
+        values.destination = destination.value;
+        values.key = key.value;
+        values.cm_name = values.cm_name + '.xml';
+        setModalProps({ confirmLoading: true });
+        saveNode(values)
+          .then(() => {
+            createMessage.success(t('common.saveSuccess'));
+            emit('success');
+          })
+          .finally(() => {
+            setModalProps({ confirmLoading: false });
+            closeModal();
+          });
       }
 
       return {

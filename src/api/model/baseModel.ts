@@ -11,6 +11,8 @@ export interface BasicPageParams {
   page: number;
   pageSize: number;
   key?: string;
+  field?: string;
+  order?: string;
 }
 
 export interface BasicDelParams {
