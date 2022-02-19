@@ -150,7 +150,7 @@ const admin: AppRouteModule = {
       children: [
         {
           path: 'login',
-          name: 'Login',
+          name: 'LogLogin', // Login与登录页name重复会导致登录页路由被覆盖
           component: () => import('/@/views/admin/log/login/index.vue'),
           meta: {
             title: t('routes.admin.log.login'),

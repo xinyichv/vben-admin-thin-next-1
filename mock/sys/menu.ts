@@ -530,7 +530,7 @@ const systemRoute = {
       children: [
         {
           path: 'login',
-          name: 'Login',
+          name: 'LogLogin', // Login与登录页name重复会导致登录页路由被覆盖
           component: '/admin/log/login/index.vue',
           meta: {
             title: 'routes.admin.log.login',

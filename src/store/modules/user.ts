@@ -7,7 +7,11 @@ import { PageEnum } from '/@/enums/pageEnum';
 import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
 import { getAuthCache, setAuthCache } from '/@/utils/auth';
 import { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel';
-import { doLogout, getUserInfo, loginApi } from '/@/api/sys/user';
+import {
+  // doLogout,
+  getUserInfo,
+  loginApi,
+} from '/@/api/sys/user';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { router } from '/@/router';
@@ -124,6 +128,8 @@ export const useUserStore = defineStore({
         const permissionStore = usePermissionStore();
         if (!permissionStore.isDynamicAddedRoute) {
           const routes = await permissionStore.buildRoutesAction();
+          // 拼接用户有权限的路由列表，这里需要注意的是通过addRoute动态添加路由，需要保证路由的路径和name不重复。
+          // 后续管理页面应该加一条校验规则。
           routes.forEach((route) => {
             router.addRoute(route as unknown as RouteRecordRaw);
           });
@@ -158,7 +164,8 @@ export const useUserStore = defineStore({
     async logout(goLogin = false) {
       if (this.getToken) {
         try {
-          await doLogout();
+          // FIXME登出接口还不知道
+          // await doLogout();
         } catch {
           console.log('注销Token失败');
         }
