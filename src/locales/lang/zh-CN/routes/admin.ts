@@ -17,6 +17,7 @@ export default {
   folderrule: '文件夹规则',
   dataModel: '数据模型',
   workflow: '工作流程',
+  bpmn: '流程设计',
   thirdparty: {
     thirdparty: '第三方接口',
     wechat: '微信',

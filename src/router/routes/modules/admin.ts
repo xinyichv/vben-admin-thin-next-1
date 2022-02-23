@@ -133,6 +133,18 @@ const admin: AppRouteModule = {
       },
     },
     {
+      path: 'bpmn/:id',
+      name: 'Bpmn',
+      meta: {
+        hideMenu: true,
+        title: t('routes.admin.bpmn'),
+        ignoreKeepAlive: true,
+        showMenu: false,
+        currentActiveMenu: '/admin/workflow',
+      },
+      component: () => import('/@/views/admin/workflow/bpmn.vue'),
+    },
+    {
       path: 'thirdparty',
       name: 'ThirdParty',
       component: () => import('/@/views/admin/thirdparty/index.vue'),

@@ -513,6 +513,18 @@ const systemRoute = {
       },
     },
     {
+      path: 'bpmn/:id',
+      name: 'Bpmn',
+      component: '/admin/workflow/bpmn.vue',
+      meta: {
+        hideMenu: true,
+        title: 'routes.admin.bpmn',
+        ignoreKeepAlive: true,
+        showMenu: false,
+        currentActiveMenu: '/admin/workflow',
+      },
+    },
+    {
       path: 'thirdparty',
       name: 'ThirdParty',
       component: '/admin/thirdparty/index.vue',

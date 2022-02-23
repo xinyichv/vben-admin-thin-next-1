@@ -43,6 +43,7 @@
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
+  import { useGo } from '/@/hooks/web/usePage';
 
   import { getBpmByPage } from '/@/api/admin/workflow';
   import { saveNode, deleteNode } from '/@/api/common';
@@ -55,6 +56,7 @@
     setup() {
       const { t } = useI18n();
       const { createMessage } = useMessage();
+      const go = useGo();
       const [openFullLoading, closeFullLoading] = useLoading({
         tip: t('common.actioningText'),
       });
@@ -106,6 +108,7 @@
 
       function handleCreate() {
         console.log('create');
+        go('/admin/bpmn/create');
       }
 
       function handleEdit(record: Recordable) {
