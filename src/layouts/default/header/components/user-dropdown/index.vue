@@ -2,8 +2,7 @@
   <Dropdown placement="bottomLeft" :overlayClassName="`${prefixCls}-dropdown-overlay`">
     <span :class="[prefixCls, `${prefixCls}--${theme}`]" class="flex">
       <!-- modified by leencloud -->
-      <!-- <img :class="`${prefixCls}__header`" :src="getUserInfo.avatar" /> -->
-      <img :class="`${prefixCls}__header`" :src="`${getUserInfo.avatar}&alf_ticket=${token}`" />
+      <img :class="`${prefixCls}__header`" :src="getUserInfo.avatar" />
       <span :class="`${prefixCls}__info hidden md:block`">
         <span :class="`${prefixCls}__name  `" class="truncate">
           {{ getUserInfo.name }}
@@ -80,7 +79,7 @@
 
       const getUserInfo = computed(() => {
         const { name = '', avatar, id } = userStore.getUserInfo || {};
-        return { name, avatar: avatar || headerImg, id };
+        return { name, avatar: avatar ? `${avatar}&alf_ticket=${token}` : null || headerImg, id };
       });
 
       const [register, { openModal }] = useModal();

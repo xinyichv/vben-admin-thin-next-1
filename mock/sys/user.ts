@@ -66,7 +66,6 @@ export default [
     timeout: 200,
     method: 'post',
     response: ({ body }) => {
-      console.log('调用了登录接口');
       const { username, password } = body;
       const checkUser = createFakeUserList().find(
         (item) => item.username === username && password === item.password,

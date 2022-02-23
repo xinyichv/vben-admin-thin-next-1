@@ -5,7 +5,7 @@ import { ErrorMessageMode } from '/#/axios';
 
 enum Api {
   Login = '/api/login',
-  Logout = '/api/logout',
+  Logout = '/api/logout', // FIXME登出接口待定
   GetUserInfo = '/idoc/common/user/profile',
   GetPermCode = '/getPermCode',
 }
