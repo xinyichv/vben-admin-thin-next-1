@@ -16,6 +16,7 @@ export default {
   save: '保存',
   saveSuccess: '保存成功！',
   saveSuccessWait: '保存成功！请稍后手动刷新页面。',
+  actionSuccess: '操作成功！',
   actionFail: '操作失败，请重试或联络系统管理员！',
   delSuccess: '删除成功!',
   removeSuccess: '移除成功！',
